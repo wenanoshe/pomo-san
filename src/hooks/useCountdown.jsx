@@ -11,11 +11,12 @@ export function useCountdown(initialCount) {
   // handling functions
 
   const countdown = () => {
+    // Stop countdown when reaches 0
     setCount((last) => {
       if (last <= 0) {
-        pauseCountDown();
+        clearInterval(intervalId);
 
-        return 0;
+        return last;
       } else return last - 1;
     });
   };
@@ -24,23 +25,21 @@ export function useCountdown(initialCount) {
     intervalId || setIntervalId(setInterval(countdown, 1000));
   };
 
-  const pauseCountDown = () => {
-    console.log("are");
+  const stopCountdown = () => {
     clearInterval(intervalId);
+    setIntervalId(null);
   };
 
-  const resetCountDown = () => {
-    pauseCountDown();
-    setIntervalId(null);
-
+  const resetCountdown = () => {
+    stopCountdown();
     setCount(initialCount);
   };
 
   return [
-    { minutes: Math.floor(count / 60), seconds: count % 60 },
+    { minutes: Math.floor(count / 60), seconds: count % 60, count },
     setCount,
     startCountDown,
-    pauseCountDown,
-    resetCountDown,
+    stopCountdown,
+    resetCountdown,
   ];
 }

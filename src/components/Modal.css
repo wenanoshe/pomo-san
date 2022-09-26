@@ -1,0 +1,39 @@
+.modal {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.modal.modal--open {
+  display: flex;
+}
+
+.modal__container {
+  position: relative;
+  border-radius: 5px;
+  max-width: 400px;
+  background-color: inherit;
+}
+
+.modal__close {
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.modal__close:hover {
+  background-color: #646cff;
+  color: #242424;
+}

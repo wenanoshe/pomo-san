@@ -1,32 +1,34 @@
 import { useEffect } from "react";
 import { useCountdown } from "../hooks/useCountdown";
 
-const Timer = ({ secs }) => {
-  const [count, setCount, startCountdown, pauseCountDown, resetCountDown] =
+const Timer = ({ secs, skipSession }) => {
+  const [count, setCount, startCountdown, stopCountdown, resetCountdown] =
     useCountdown(secs);
-
-  const { minutes, seconds } = count;
 
   useEffect(() => {
     setCount(secs);
+
+    // When the timer is removed
+    return resetCountdown();
   }, [secs]);
 
-  // useEffect(() => {
-  //   console.log("this is mounted");
-  //   // When the timer is removed
-  //   return () => {
-  //     console.log("Is this unmounted");
-  //   };
-  // }, []);
+  const handleSkip = () => {
+    // Passing a parameter that allow if count the pomodoro sesion as one
+    let minimumToCountAsSession = secs * 1;
+
+    if (count.count < minimumToCountAsSession) skipSession(true);
+    else skipSession(false);
+  };
 
   return (
     <div>
       <span>
-        {minutes} : {seconds}
+        {count.minutes} : {count.seconds}
       </span>
       <button onClick={startCountdown}>start</button>
-      <button onClick={pauseCountDown}>pause</button>
-      <button onClick={resetCountDown}>restart</button>
+      <button onClick={stopCountdown}>pause</button>
+      <button onClick={resetCountdown}>restart</button>
+      <button onClick={handleSkip}>⏭</button>
     </div>
   );
 };

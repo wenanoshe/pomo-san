@@ -65,6 +65,23 @@ function Pomodoro() {
   }, [profiles]);
 
   useEffect(() => {
+    // Use a timestamp to compare the creation of the finished session,
+    // and reset it to 0 if it's different
+
+    let currentTimestamp = new Date().getDate();
+    let FNCopy = [...finishedSessions];
+
+    FNCopy.map((item) => {
+      if (item.timestamp !== currentTimestamp) {
+        item.finishedSessions = 0;
+        item.timestamp = currentTimestamp;
+      }
+    });
+
+    setFinishedSessions(FNCopy);
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("finishedSessions", JSON.stringify(finishedSessions));
   }, [finishedSessions]);
 

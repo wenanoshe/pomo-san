@@ -1,0 +1,63 @@
+@use "../vars" as *;
+
+.btn {
+  margin: 0;
+  border: none;
+
+  position: relative;
+  padding: 2em /* 32px */ 3em /* 48px */;
+  cursor: pointer;
+  border-radius: 2em;
+  transition: box-shadow $speed, transform $speed-x3 $ttf, border-color $speed;
+
+  &:hover {
+    box-shadow: 0 10px 10px 5px rgba(0, 0, 0, 0.1);
+    // border-color: $red-900;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  //**//
+  &--md {
+    padding: 1.5em /*24px*/;
+    border-radius: 1.5em;
+  }
+
+  &__icon {
+    font-size: 3.2rem;
+  }
+}
+
+.pomodoro .btn {
+  // border: 2px solid transparent;
+  background-color: $red-alpha-700;
+  color: $red-900;
+
+  &.sec {
+    background-color: $red-alpha-100;
+  }
+}
+
+.break .btn {
+  background-color: $green-alpha-600;
+  color: $green-900;
+
+  &.sec {
+    background-color: $green-alpha-100;
+  }
+}
+
+.longBreak .btn {
+  background-color: $blue-alpha-600;
+  color: $blue-900;
+
+  &.sec {
+    background-color: $blue-alpha-100;
+  }
+}

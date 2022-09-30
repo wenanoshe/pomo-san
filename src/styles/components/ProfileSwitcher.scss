@@ -1,0 +1,32 @@
+@use "../vars" as *;
+
+.ps {
+  &__openBtn {
+    width: max-content;
+    font-family: $RobotoFlex;
+    font-size: 2.4rem;
+    border: 2px solid transparent;
+    padding: 0.8rem 1.6rem;
+    border-radius: 5rem;
+    @include flex(center, center, row, 1rem);
+    cursor: pointer;
+  }
+}
+
+.pomodoro .ps__openBtn {
+  border-color: $red-900;
+  background-color: $red-alpha-100;
+  color: $red-900;
+}
+
+.break .ps__openBtn {
+  border-color: $green-900;
+  background-color: $green-alpha-100;
+  color: $green-900;
+}
+
+.longBreak .ps__openBtn {
+  border-color: $blue-900;
+  background-color: $blue-alpha-100;
+  color: $blue-900;
+}

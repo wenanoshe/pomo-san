@@ -1,7 +1,11 @@
+import "../styles/components/Pomodoro.scss";
+
 // COMPONENS
 import Timer from "./Timer";
-import Modal from "./Modal";
-import AddProfile from "./AddProfile";
+import ProfileSwitcher from "./ProfileSwitcher";
+
+import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
+import { faBrain, faMugHot } from "@fortawesome/free-solid-svg-icons";
 
 // HOOKS
 import { useState, useEffect } from "react";
@@ -57,6 +61,10 @@ function Pomodoro() {
 
   // ---- Effects ----
   useEffect(() => {
+    document.body.className = currentSession;
+  }, [currentSession]);
+
+  useEffect(() => {
     setSessionsBeforeLongBreak(currentProfile.sessionsBeforeLongBreak);
   }, [currentProfile]);
 
@@ -88,7 +96,7 @@ function Pomodoro() {
   // ---- Functions ----
 
   const handleChangeProfile = (e) => {
-    setCurrentProfile(JSON.parse(e.target.value));
+    setCurrentProfile(JSON.parse(e.currentTarget.dataset.value));
   };
 
   const skipSession = (countAsSession) => {
@@ -152,28 +160,33 @@ function Pomodoro() {
   };
 
   return (
-    <div className="pomodoro">
-      <select onChange={handleChangeProfile}>
-        {profiles.map((el) => (
-          <option key={el.id} value={JSON.stringify(el)}>
-            {el.name}
-          </option>
-        ))}
-      </select>
-      <button onClick={openModal}>Add new profile ➕</button>
-      <Modal isOpen={isOpenModal} closeModal={closeModal}>
-        <AddProfile addNewProfile={addNewProfile} />
-      </Modal>
-      <hr />
-      <h3>Current Session: {currentSession}</h3>
-      {
-        <Timer
-          secs={currentProfile.session[currentSession] * 60}
-          skipSession={skipSession}
-        />
-      }
+    <div className="pomoApp">
+      <ProfileSwitcher
+        profiles={profiles}
+        currentProfile={currentProfile}
+        handleChangeProfile={handleChangeProfile}
+        addNewProfile={addNewProfile}
+        currentSession={currentSession}
+      />
+      <Timer
+        secs={currentProfile.session[currentSession] * 60}
+        skipSession={skipSession}
+        currentSession={currentSession}
+      />
     </div>
   );
 }
+
+/*
+      <div className={`chip chip--${currentSession}`}>
+        {currentSession === "pomodoro" ? (
+          <FAI className="chip__icon" icon={faBrain} />
+        ) : (
+          <FAI className="chip__icon" icon={faMugHot} />
+        )}
+        <span className="chip__stm">{currentSession}</span>
+      </div>
+
+*/
 
 export default Pomodoro;

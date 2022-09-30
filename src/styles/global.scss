@@ -1,0 +1,16 @@
+@use "./vars" as *;
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.6rem;
+  min-height: 100vh;
+  @include flex(center, center);
+  font-family: $Roboto;
+}
+
+#root {
+  height: 100%;
+}

@@ -1,0 +1,51 @@
+@use "../vars" as *;
+
+body.pomodoro {
+  background-color: $red-50;
+}
+
+body.break {
+  background-color: $green-50;
+}
+
+body.longBreak {
+  background-color: $blue-50;
+}
+
+.pomoApp {
+  @include flex(center, center, column, 3rem);
+}
+
+// CHIP
+.chip {
+  width: max-content;
+  font-family: $RobotoFlex;
+  font-size: 2rem;
+  border: 2px solid transparent;
+  padding: 0.8rem 1.6rem;
+  border-radius: 10rem;
+
+  @include flex(center, center, row, 1rem);
+
+  &__stm {
+    text-transform: capitalize;
+  }
+}
+
+.pomodoro .chip {
+  border-color: $red-900;
+  background-color: $red-alpha-100;
+  color: $red-900;
+}
+
+.break .chip {
+  border-color: $green-900;
+  background-color: $green-alpha-100;
+  color: $green-900;
+}
+
+.longBreak .chip {
+  border-color: $blue-900;
+  background-color: $blue-alpha-100;
+  color: $blue-900;
+}

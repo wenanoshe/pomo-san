@@ -1,0 +1,44 @@
+/*Colors*/
+
+$red-950: #0d0404;
+$red-900: #471515;
+$red-50: #fff2f2;
+$red-alpha-700: #ff4c4cb5;
+$red-alpha-100: #ff4c4c26;
+
+$green-950: #040d06;
+$green-900: #14401d;
+$green-50: #f2fff5;
+$green-alpha-600: #4dda6e9e;
+$green-alpha-100: #4dda6e26;
+
+$blue-950: #04090d;
+$blue-900: #153047;
+$blue-50: #f2f9ff;
+$blue-alpha-600: #4cacff9e;
+$blue-alpha-100: #4cacff26;
+
+/*Sizes*/
+$radius: 2.4rem;
+$radius-2: 0.4rem;
+
+/* trasition*/
+$ttf: cubic-bezier(0.65, -0.17, 0.12, 1.18); /*Transition timing function*/
+$speed: 300ms;
+$speed-x3: 100ms;
+
+/*Fonts*/
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+$Roboto: "Roboto", sans-serif;
+$RobotoFlex: "Roboto Flex", sans-serif;
+
+/* Mixins */
+@mixin flex($jc, $ai: strech, $fdirection: row, $gap: 0) {
+  display: flex;
+  flex-direction: $fdirection;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $gap;
+}

@@ -1,0 +1,30 @@
+@use "../vars" as *;
+
+.timer {
+  @include flex(center, center, column, 3rem);
+
+  &__clock {
+    @include flex(center, center, column);
+    font-family: $RobotoFlex;
+    font-weight: 200;
+    font-size: 20rem;
+    line-height: 0.85;
+  }
+
+  .pomodoro &__clock {
+    color: $red-900;
+  }
+
+  .break &__clock {
+    color: $green-900;
+  }
+
+  .longBreak &__clock {
+    color: $blue-900;
+  }
+
+  // Actions
+  &__actions {
+    @include flex(center, center, row, 1.6rem);
+  }
+}

@@ -16,7 +16,7 @@ const regex = {
   onlyNumbers: new RegExp(/^\d{1,2}$/),
 };
 
-const AddProfile = ({ addNewProfile }) => {
+const AddProfile = ({ addNewProfile, closeModal }) => {
   const [form, setForm] = useState(initForm);
 
   const handleChange = (e) => {
@@ -56,6 +56,7 @@ const AddProfile = ({ addNewProfile }) => {
     }
 
     addNewProfile(form);
+    closeModal();
     setForm(initForm);
   };
 

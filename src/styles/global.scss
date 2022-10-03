@@ -11,6 +11,24 @@ body {
   font-family: $Roboto;
 }
 
+.pomodoro {
+  color: $red-900;
+}
+
+.break {
+  color: $green-900;
+}
+
+.longBreak {
+  color: $blue-900;
+}
+
 #root {
   height: 100%;
+}
+
+@media screen and (max-width: 412px) {
+  body {
+    transform: scale(0.85);
+  }
 }

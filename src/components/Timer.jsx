@@ -64,14 +64,14 @@ const Timer = ({ secs, skipSession, currentSession }) => {
 
         {isTimerRunning ? (
           <Button
-            className={`btn--${currentSession}`}
+            className={`btn--${currentSession} timer__btn`}
             onClick={() => handleRunning("pause")}
           >
             <FAI className="btn__icon" icon={faPause} />
           </Button>
         ) : (
           <Button
-            className={`btn--${currentSession}`}
+            className={`btn--${currentSession} timer__btn`}
             onClick={() => handleRunning("play")}
           >
             <FAI className="btn__icon" icon={faPlay} />

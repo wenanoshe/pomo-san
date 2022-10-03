@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+import "../styles/components/AddProfile.scss";
+import Button from "./Button";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+
 const initForm = {
   name: "Another Profile",
   id: crypto.randomUUID(),
@@ -61,10 +67,11 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
   };
 
   return (
-    <form>
-      <div>
-        <label>Name your new profile</label>
+    <form className="profileForm">
+      <div className="profileForm__place">
+        <label>Profile name</label>
         <input
+          className="profileForm__input"
           type="text"
           name="name"
           value={form.name}
@@ -72,49 +79,68 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
         />
       </div>
 
-      <div>
-        <label>Pomodoro duration (minutes)</label>
+      <div className="profileForm__place">
+        <label>Focus duration</label>
         <input
+          className="profileForm__input"
           type="number"
           name="pomodoro"
+          min="1"
+          max="99"
           value={form.session.pomodoro}
           onChange={handleChangeSession}
+          required
         />
       </div>
 
-      <div>
+      <div className="profileForm__place">
         <label>Break duration</label>
         <input
           type="number"
+          className="profileForm__input"
           name="break"
+          min="1"
+          max="99"
           value={form.session.break}
           onChange={handleChangeSession}
+          required
         />
       </div>
 
-      <div>
-        <label> Long Break duration</label>
+      <div className="profileForm__place">
+        <label>Long Break duration</label>
         <input
           type="number"
+          className="profileForm__input"
           name="longBreak"
+          min="1"
+          max="99"
           value={form.session.longBreak}
           onChange={handleChangeSession}
+          required
         />
       </div>
 
-      <div>
+      <div className="profileForm__place">
         <label>Sesions before long break</label>
         <input
           type="number"
+          className="profileForm__input"
           name="sessionsBeforeLongBreak"
           value={form.sessionsBeforeLongBreak}
           onChange={handleChange}
+          required
         />
       </div>
 
-      <button type="submit" onClick={handleSubmit}>
-        Add
-      </button>
+      <Button
+        type="submit"
+        onClick={handleSubmit}
+        className="profileForm__submit"
+      >
+        <span>Add</span>
+        <FontAwesomeIcon icon={faCirclePlus} />
+      </Button>
     </form>
   );
 };

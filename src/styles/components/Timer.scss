@@ -11,20 +11,12 @@
     line-height: 0.85;
   }
 
-  .pomodoro &__clock {
-    color: $red-900;
-  }
-
-  .break &__clock {
-    color: $green-900;
-  }
-
-  .longBreak &__clock {
-    color: $blue-900;
-  }
-
   // Actions
   &__actions {
     @include flex(center, center, row, 1.6rem);
+  }
+
+  &__btn {
+    min-width: 12rem;
   }
 }

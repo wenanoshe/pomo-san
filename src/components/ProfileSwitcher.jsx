@@ -1,7 +1,7 @@
 import { useModal } from "../hooks/useModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faFeather } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faFeather, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import AddProfile from "./AddProfile";
 import Modal from "./Modal";
@@ -14,36 +14,55 @@ const ProfileSwitcher = ({
   currentProfile,
   handleChangeProfile,
   addNewProfile,
-  currentSession,
 }) => {
   const [isOpenModal, openModal, closeModal] = useModal();
   const [isOpenAddProfile, openAddProfileModal, closeAddProfileModal] =
     useModal();
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     closeModal();
-    handleChangeProfile();
+    handleChangeProfile(e);
   };
 
   return (
     <div className="ps">
-      <Modal isOpen={isOpenModal} closeModal={closeModal}>
-        <ul>
+      <Modal isOpen={isOpenModal} className="ps__modal-profiles">
+        <div className="ps__header">
+          <h3 className="ps__title">Profiles</h3>
+          <Button onClick={closeModal} className="btn--md sec ps__modal-close">
+            <FontAwesomeIcon icon={faXmark} />
+          </Button>
+        </div>
+        <ul className="ps__profiles">
           {profiles.map((el) => (
             <li
               key={el.id}
               data-value={JSON.stringify(el)}
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
+              className={`ps__li ${
+                currentProfile.id === el.id ? "ps__li--active" : ""
+              }`}
             >
               <FontAwesomeIcon icon={faFeather} />
-              <span>{el.name}</span>
+              <span className="ps__profile-name">{el.name}</span>
             </li>
           ))}
         </ul>
-        <button onClick={openAddProfileModal}>Add Profile</button>
+        <Button onClick={openAddProfileModal} className="ps__addProfileBtn">
+          Add Profile
+        </Button>
       </Modal>
 
-      <Modal isOpen={isOpenAddProfile} closeModal={closeAddProfileModal}>
+      <Modal isOpen={isOpenAddProfile} className="ps__modal-profiles">
+        <div className="ps__header">
+          <h3 className="ps__title">Add New Profile</h3>
+          <Button
+            onClick={closeAddProfileModal}
+            className="btn--md sec ps__modal-close"
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </Button>
+        </div>
         <AddProfile
           addNewProfile={addNewProfile}
           closeModal={closeAddProfileModal}

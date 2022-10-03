@@ -10,41 +10,34 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: $RobotoFlex;
+  z-index: 10;
 
   &__container {
     position: relative;
-    border-radius: 5px;
+    border-radius: 2.4rem;
     max-width: 400px;
     background-color: inherit;
-    padding: 1rem;
-  }
-
-  &__close {
-    width: 2rem;
-    height: 2rem;
-    border: none;
-    border-radius: 50%;
-    background-color: transparent;
-    position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
-    transition: background-color 0.2s, color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    &:hover {
-      background-color: inherit;
-      color: #242424;
-    }
+    padding: 2.4rem;
   }
 }
 
 .modal.modal--open {
   display: flex;
+}
+
+.pomodoro .modal__container {
+  background-color: $red-50;
+}
+
+.break .modal__container {
+  background-color: $green-50;
+}
+
+.longBreak .modal__container {
+  background-color: $blue-50;
 }
 
 @media screen and (max-width: 550px) {

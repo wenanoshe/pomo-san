@@ -1,0 +1,41 @@
+@use "../vars" as *;
+
+.profileForm {
+  @include flex(center, stretch, column, 1.5rem);
+
+  &__place {
+    @include flex(space-between, center);
+  }
+
+  &__input {
+    border-radius: 0.8rem;
+    border: 2px solid $black-alpha-100;
+    padding: 1.2rem;
+    transition: border-color $speed;
+
+    &[type="text"] {
+      max-width: 50%;
+    }
+
+    &[type="number"] {
+      width: 5rem;
+    }
+  }
+
+  &__submit {
+    padding: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+.pomodoro .profileForm__input {
+  color: $red-900;
+
+  &:focus {
+    outline: none;
+    border-color: $red-900;
+  }
+}

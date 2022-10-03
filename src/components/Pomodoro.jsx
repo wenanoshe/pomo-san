@@ -4,8 +4,8 @@ import "../styles/components/Pomodoro.scss";
 import Timer from "./Timer";
 import ProfileSwitcher from "./ProfileSwitcher";
 
-import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
-import { faBrain, faMugHot } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
+// import { faBrain, faMugHot } from "@fortawesome/free-solid-svg-icons";
 
 // HOOKS
 import { useState, useEffect } from "react";
@@ -166,7 +166,6 @@ function Pomodoro() {
         currentProfile={currentProfile}
         handleChangeProfile={handleChangeProfile}
         addNewProfile={addNewProfile}
-        currentSession={currentSession}
       />
       <Timer
         secs={currentProfile.session[currentSession] * 60}

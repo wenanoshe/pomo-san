@@ -1,11 +1,16 @@
-import { useModal } from "../hooks/useModal";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faFeather, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClock,
+  faXmark,
+  faCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 import AddProfile from "./AddProfile";
 import Modal from "./Modal";
 import Button from "./Button";
+import ProfileItem from "./ProfileItem";
+
+import { useModal } from "../hooks/useModal";
 
 import "../styles/components/ProfileSwitcher.scss";
 
@@ -14,14 +19,28 @@ const ProfileSwitcher = ({
   currentProfile,
   handleChangeProfile,
   addNewProfile,
+  editProfile,
+  deleteProfile,
 }) => {
   const [isOpenModal, openModal, closeModal] = useModal();
   const [isOpenAddProfile, openAddProfileModal, closeAddProfileModal] =
     useModal();
 
+  // EFECTS
+
+  // FUNCTIONS
+
   const handleClick = (e) => {
     closeModal();
-    handleChangeProfile(e);
+    handleChangeProfile(e.target.parentElement);
+  };
+
+  // const handleEditProfile = () => {};
+
+  const handleDelProfile = (e) => {
+    e.stopPropagation();
+    const li = e.currentTarget.parentElement.parentElement.dataset.value;
+    deleteProfile(JSON.parse(li));
   };
 
   return (
@@ -35,21 +54,19 @@ const ProfileSwitcher = ({
         </div>
         <ul className="ps__profiles">
           {profiles.map((el) => (
-            <li
+            <ProfileItem
               key={el.id}
-              data-value={JSON.stringify(el)}
-              onClick={(e) => handleClick(e)}
-              className={`ps__li ${
-                currentProfile.id === el.id ? "ps__li--active" : ""
-              }`}
-            >
-              <FontAwesomeIcon icon={faFeather} />
-              <span className="ps__profile-name">{el.name}</span>
-            </li>
+              el={el}
+              editProfile={editProfile}
+              handleDelProfile={handleDelProfile}
+              currentProfile={currentProfile}
+              handleClick={handleClick}
+            />
           ))}
         </ul>
         <Button onClick={openAddProfileModal} className="ps__addProfileBtn">
-          Add Profile
+          <span>Add new Profile</span>
+          <FontAwesomeIcon icon={faCirclePlus} />
         </Button>
       </Modal>
 

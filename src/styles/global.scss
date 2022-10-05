@@ -2,33 +2,69 @@
 
 html {
   font-size: 10px;
+  height: 100%;
 }
 
 body {
   font-size: 1.6rem;
-  min-height: 100vh;
-  @include flex(center, center);
+  height: 100%;
   font-family: $Roboto;
 }
 
 .pomodoro {
   color: $red-900;
+
+  & input {
+    color: $red-900;
+
+    &:focus {
+      border-color: $red-900;
+    }
+  }
 }
 
 .break {
   color: $green-900;
+
+  & input {
+    color: $green-900;
+    &:focus {
+      border-color: $green-900;
+    }
+  }
 }
 
 .longBreak {
   color: $blue-900;
+
+  & input {
+    color: $blue-900;
+    &:focus {
+      border-color: $blue-900;
+    }
+  }
 }
 
 #root {
   height: 100%;
+  @include flex(center, center);
+}
+
+input,
+textarea,
+button,
+select,
+a {
+  /*Remove the highlight when click on mobile*/
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: border-color $speed;
+  &:focus {
+    outline: none;
+  }
 }
 
 @media screen and (max-width: 412px) {
-  body {
-    transform: scale(0.85);
+  html {
+    font-size: 9px;
   }
 }

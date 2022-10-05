@@ -1,0 +1,18 @@
+@use "../vars" as *;
+
+.epf {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__input {
+    border-radius: 0.8rem;
+    border: 2px solid $black-alpha-100;
+    padding: 0.8rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 2rem;
+  }
+}

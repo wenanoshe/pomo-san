@@ -20,3 +20,9 @@
     min-width: 12rem;
   }
 }
+
+@media screen and (max-width: 412px) {
+  .timer__clock {
+    font-size: 19rem;
+  }
+}

@@ -29,6 +29,10 @@
     border-radius: 1.5em;
   }
 
+  &--sm {
+    padding: 0;
+  }
+
   &__icon {
     font-size: 3.2rem;
   }
@@ -42,6 +46,10 @@
   &.sec {
     background-color: $red-alpha-100;
   }
+
+  &.sec-2 {
+    background-color: transparent;
+  }
 }
 
 .break .btn {
@@ -51,6 +59,10 @@
   &.sec {
     background-color: $green-alpha-100;
   }
+
+  &.sec-2 {
+    background-color: transparent;
+  }
 }
 
 .longBreak .btn {
@@ -59,5 +71,9 @@
 
   &.sec {
     background-color: $blue-alpha-100;
+  }
+
+  &.sec-2 {
+    background-color: transparent;
   }
 }

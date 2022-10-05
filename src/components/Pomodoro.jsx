@@ -9,12 +9,13 @@ import ProfileSwitcher from "./ProfileSwitcher";
 
 // HOOKS
 import { useState, useEffect } from "react";
-import { useModal } from "../hooks/useModal";
+import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
+// import { useModal } from "../hooks/useModal";
 
 const defaultProfiles = [
   {
     name: "Study",
-    id: crypto.randomUUID(),
+    id: 1,
     session: {
       pomodoro: 25,
       break: 5,
@@ -35,7 +36,8 @@ const session = {
 
 const defaultFinishedSessions = [
   {
-    sessionName: "Study",
+    name: "Study",
+    id: 1,
     finishedSessions: 0,
     timestamp: new Date().getDate(),
   },
@@ -57,7 +59,7 @@ function Pomodoro() {
   );
 
   // Add profile modal hook
-  const [isOpenModal, openModal, closeModal] = useModal();
+  // const [isOpenModal, openModal, closeModal] = useModal();
 
   // ---- Effects ----
   useEffect(() => {
@@ -93,10 +95,10 @@ function Pomodoro() {
     localStorage.setItem("finishedSessions", JSON.stringify(finishedSessions));
   }, [finishedSessions]);
 
-  // ---- Functions ----
+  // ---- FUNCTIONS ----
 
-  const handleChangeProfile = (e) => {
-    setCurrentProfile(JSON.parse(e.currentTarget.dataset.value));
+  const handleChangeProfile = (value) => {
+    setCurrentProfile(JSON.parse(value.dataset.value));
   };
 
   const skipSession = (countAsSession) => {
@@ -146,7 +148,8 @@ function Pomodoro() {
 
     // Updating finishedSessions
     let newEntry = {
-      sessionName: data.name,
+      name: data.name,
+      id: data.id,
       finishedSessions: 0,
       timestamp: new Date().getDate(),
     };
@@ -155,8 +158,29 @@ function Pomodoro() {
     FSCopy.push(newEntry);
 
     setFinishedSessions(FSCopy);
+  };
 
-    closeModal();
+  const editProfile = (id, newValue) => {
+    const copy = [...profiles];
+
+    const itemToEdit = copy.find((i) => i.id === id);
+    itemToEdit.name = newValue;
+
+    setProfiles(copy);
+
+    const FSCopy = [...finishedSessions];
+
+    FSCopy.find((i) => i.id === id).name = newValue;
+
+    setFinishedSessions(FSCopy);
+  };
+
+  const deleteProfile = (data) => {
+    let newProfiles = profiles.filter((i) => i.id !== data.id);
+    let newFS = finishedSessions.filter((i) => i.id !== data.id);
+
+    setProfiles(newProfiles);
+    setFinishedSessions(newFS);
   };
 
   return (
@@ -166,6 +190,8 @@ function Pomodoro() {
         currentProfile={currentProfile}
         handleChangeProfile={handleChangeProfile}
         addNewProfile={addNewProfile}
+        editProfile={editProfile}
+        deleteProfile={deleteProfile}
       />
       <Timer
         secs={currentProfile.session[currentSession] * 60}

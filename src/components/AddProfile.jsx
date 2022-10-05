@@ -8,7 +8,6 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 const initForm = {
   name: "Another Profile",
-  id: crypto.randomUUID(),
   session: {
     pomodoro: 25,
     break: 5,
@@ -61,7 +60,7 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
       return;
     }
 
-    addNewProfile(form);
+    addNewProfile({ ...form, id: crypto.randomUUID() });
     closeModal();
     setForm(initForm);
   };
@@ -69,8 +68,9 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
   return (
     <form className="profileForm">
       <div className="profileForm__place">
-        <label>Profile name</label>
+        <label htmlFor="name">Profile name</label>
         <input
+          id="name"
           className="profileForm__input"
           type="text"
           name="name"
@@ -80,8 +80,9 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
       </div>
 
       <div className="profileForm__place">
-        <label>Focus duration</label>
+        <label htmlFor="focus">Focus duration</label>
         <input
+          id="focus"
           className="profileForm__input"
           type="number"
           name="pomodoro"
@@ -94,8 +95,9 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
       </div>
 
       <div className="profileForm__place">
-        <label>Break duration</label>
+        <label htmlFor="break">Break duration</label>
         <input
+          id="break"
           type="number"
           className="profileForm__input"
           name="break"
@@ -108,8 +110,9 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
       </div>
 
       <div className="profileForm__place">
-        <label>Long Break duration</label>
+        <label htmlFor="longBreak">Long Break duration</label>
         <input
+          id="longBreak"
           type="number"
           className="profileForm__input"
           name="longBreak"
@@ -122,8 +125,9 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
       </div>
 
       <div className="profileForm__place">
-        <label>Sesions before long break</label>
+        <label htmlFor="beforeLongBreak">Sesions before long break</label>
         <input
+          id="beforeLongBreak"
           type="number"
           className="profileForm__input"
           name="sessionsBeforeLongBreak"

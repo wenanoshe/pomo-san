@@ -22,7 +22,6 @@
 
   &__header {
     min-width: 30rem;
-    // margin-bottom: 2.4rem;
     @include flex(space-between, center);
   }
 
@@ -50,16 +49,22 @@
     border-radius: 1rem;
     @include flex(space-between, center);
     cursor: pointer;
-    transition: background-color $speed;
 
     &:hover {
-      background-color: $black-alpha-100;
+      text-decoration: underline;
     }
   }
+
   &__profile-name {
     text-transform: capitalize;
   }
 
+  &__actions {
+    display: flex;
+    gap: 2rem;
+  }
+
+  //-----//
   .pomodoro &__li--active {
     background-color: $red-alpha-100;
   }
@@ -75,6 +80,9 @@
   &__addProfileBtn {
     padding: 1.5rem;
     font-weight: 700;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
   }
 }
 

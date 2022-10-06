@@ -26,13 +26,11 @@ const ProfileSwitcher = ({
   const [isOpenAddProfile, openAddProfileModal, closeAddProfileModal] =
     useModal();
 
-  // EFECTS
-
   // FUNCTIONS
 
   const handleClick = (e) => {
     closeModal();
-    handleChangeProfile(e.target.parentElement);
+    handleChangeProfile(e.currentTarget);
   };
 
   // const handleEditProfile = () => {};

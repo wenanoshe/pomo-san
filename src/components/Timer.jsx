@@ -4,6 +4,9 @@ import {
   faPause,
   faForward,
   faGear,
+  faBrain,
+  faHourglass,
+  faMugHot,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 
@@ -12,10 +15,20 @@ import { useCountdown } from "../hooks/useCountdown";
 
 import "../styles/components/Timer.scss";
 
-const Timer = ({ secs, skipSession, currentSession }) => {
+const Timer = ({
+  secs,
+  skipSession,
+  currentSession,
+  finishedSessions,
+  currentProfile,
+}) => {
   const [count, setCount, startCountdown, stopCountdown, resetCountdown] =
     useCountdown(secs);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+
+  const currentFinishedSessions = finishedSessions.find(
+    (i) => i.id === currentProfile.id
+  ).finishedSessions;
 
   useEffect(() => {
     setCount(secs);
@@ -27,7 +40,7 @@ const Timer = ({ secs, skipSession, currentSession }) => {
   const handleSkip = () => {
     setIsTimerRunning(false);
     // Passing a parameter that allow if count the pomodoro sesion as one
-    let minimumToCountAsSession = secs * 1;
+    let minimumToCountAsSession = secs * 0.2;
 
     if (count.count < minimumToCountAsSession) skipSession(true);
     else skipSession(false);
@@ -49,12 +62,14 @@ const Timer = ({ secs, skipSession, currentSession }) => {
   return (
     <div className="timer">
       <div className="timer__clock">
-        <span className="timer__mins">
-          {count.minutes.toString().padStart(2, 0)}
-        </span>
-        <span className="tiemr__secs">
-          {count.seconds.toString().padStart(2, 0)}
-        </span>
+        <span>{count.minutes.toString().padStart(2, 0)}</span>
+        <span>{count.seconds.toString().padStart(2, 0)}</span>
+
+        {currentFinishedSessions > 0 && (
+          <span className="timer__finishedSessions">
+            {currentFinishedSessions}
+          </span>
+        )}
       </div>
 
       <div className="timer__actions">
@@ -82,8 +97,18 @@ const Timer = ({ secs, skipSession, currentSession }) => {
           onClick={handleSkip}
           className={`btn--md sec btn--${currentSession}`}
         >
-          <FAI icon={faForward} className="btn__icon" />{" "}
+          <FAI icon={faForward} className="btn__icon" />
         </Button>
+
+        <span className="timer__currentSession">
+          {currentSession === "pomodoro"
+            ? "focus"
+            : currentSession === "longBreak"
+            ? "long break"
+            : currentSession}
+
+          <FAI icon={currentSession === "pomodoro" ? faHourglass : faMugHot} />
+        </span>
       </div>
     </div>
   );

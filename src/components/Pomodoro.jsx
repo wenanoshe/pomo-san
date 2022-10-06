@@ -9,7 +9,6 @@ import ProfileSwitcher from "./ProfileSwitcher";
 
 // HOOKS
 import { useState, useEffect } from "react";
-import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 // import { useModal } from "../hooks/useModal";
 
 const defaultProfiles = [
@@ -108,7 +107,7 @@ function Pomodoro() {
           // Updating finished sessions
           let copy = [...finishedSessions];
           let match = copy.find((i) => {
-            return currentProfile.name === i.sessionName;
+            return currentProfile.name === i.name;
           });
           match.finishedSessions += 1;
           setFinishedSessions(copy);
@@ -197,6 +196,8 @@ function Pomodoro() {
         secs={currentProfile.session[currentSession] * 60}
         skipSession={skipSession}
         currentSession={currentSession}
+        finishedSessions={finishedSessions}
+        currentProfile={currentProfile}
       />
     </div>
   );

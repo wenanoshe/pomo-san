@@ -47,6 +47,7 @@
   &__li {
     padding: 0.8rem;
     border-radius: 1rem;
+    font-size: 1.8rem;
     @include flex(space-between, center);
     cursor: pointer;
 

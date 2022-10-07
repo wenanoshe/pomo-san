@@ -1,0 +1,39 @@
+@use "../vars" as *;
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  &__header {
+    min-width: 30rem;
+    @include flex(space-between, center);
+  }
+
+  &__title {
+    display: flex;
+    gap: 1.5rem;
+
+    margin: 0;
+    font-weight: 700;
+    font-size: 2.4rem;
+  }
+
+  &__closeModal {
+    padding: 1rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  &__form {
+    font-size: 1.8rem;
+  }
+
+  &__field {
+    padding-bottom: 2.25rem;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}

@@ -4,7 +4,6 @@ import {
   faPause,
   faForward,
   faGear,
-  faBrain,
   faHourglass,
   faMugHot,
 } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +20,7 @@ const Timer = ({
   currentSession,
   finishedSessions,
   currentProfile,
+  openSettingsModal,
 }) => {
   const [count, setCount, startCountdown, stopCountdown, resetCountdown] =
     useCountdown(secs);
@@ -73,7 +73,10 @@ const Timer = ({
       </div>
 
       <div className="timer__actions">
-        <Button className={`btn--md sec btn--${currentSession}`}>
+        <Button
+          onClick={openSettingsModal}
+          className={`btn--md sec btn--${currentSession}`}
+        >
           <FAI icon={faGear} className="btn__icon" />
         </Button>
 

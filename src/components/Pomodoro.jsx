@@ -3,13 +3,15 @@ import "../styles/components/Pomodoro.scss";
 // COMPONENS
 import Timer from "./Timer";
 import ProfileSwitcher from "./ProfileSwitcher";
+import Settings from "./Settings";
+import Modal from "./Modal";
 
 // import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
 // import { faBrain, faMugHot } from "@fortawesome/free-solid-svg-icons";
 
 // HOOKS
 import { useState, useEffect } from "react";
-// import { useModal } from "../hooks/useModal";
+import { useModal } from "../hooks/useModal";
 
 const defaultProfiles = [
   {
@@ -57,8 +59,7 @@ function Pomodoro() {
     currentProfile.sessionsBeforeLongBreak
   );
 
-  // Add profile modal hook
-  // const [isOpenModal, openModal, closeModal] = useModal();
+  const [isOpenSettings, openSettingsModal, closeSettingsModal] = useModal();
 
   // ---- Effects ----
   useEffect(() => {
@@ -198,7 +199,11 @@ function Pomodoro() {
         currentSession={currentSession}
         finishedSessions={finishedSessions}
         currentProfile={currentProfile}
+        openSettingsModal={openSettingsModal}
       />
+      <Modal isOpen={isOpenSettings} closeModal={closeSettingsModal}>
+        <Settings closeModal={closeSettingsModal} />
+      </Modal>
     </div>
   );
 }

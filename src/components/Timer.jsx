@@ -22,13 +22,19 @@ const Timer = ({
   currentProfile,
   openSettingsModal,
 }) => {
-  const [count, setCount, startCountdown, stopCountdown, resetCountdown] =
-    useCountdown(secs);
+  const [
+    count,
+    setCount,
+    startCountdown,
+    stopCountdown,
+    resetCountdown,
+    isCountdownFinished,
+  ] = useCountdown(secs);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const currentFinishedSessions = finishedSessions.find(
-    (i) => i.id === currentProfile.id
-  ).finishedSessions;
+  /*
+   * EFFECTS
+   */
 
   useEffect(() => {
     setCount(secs);
@@ -36,6 +42,25 @@ const Timer = ({
     // When the timer is removed
     return resetCountdown();
   }, [secs]);
+
+  useEffect(() => {
+    if (count.count === 0) {
+      handleSkip();
+    }
+  }, [isCountdownFinished]);
+
+  useEffect(() => {
+    // When we change the profile in a running session
+    setIsTimerRunning(false);
+  }, [currentProfile]);
+
+  /*
+   * FUNCTIONS
+   */
+
+  const currentFinishedSessions = finishedSessions.find(
+    (i) => i.id === currentProfile.id
+  ).finishedSessions;
 
   const handleSkip = () => {
     setIsTimerRunning(false);

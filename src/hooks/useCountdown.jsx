@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useCountdown(initialCount) {
   if (typeof initialCount !== "number") {
@@ -7,8 +7,17 @@ export function useCountdown(initialCount) {
 
   const [intervalId, setIntervalId] = useState(null);
   const [count, setCount] = useState(initialCount);
+  const [isCountdownFinished, setIsCountdownFinished] = useState(false);
 
   // handling functions
+
+  useEffect(() => {
+    if (count === 0) {
+      setIsCountdownFinished(true);
+    } else {
+      setIsCountdownFinished(false);
+    }
+  }, [count]);
 
   const countdown = () => {
     // Stop countdown when reaches 0
@@ -41,5 +50,6 @@ export function useCountdown(initialCount) {
     startCountDown,
     stopCountdown,
     resetCountdown,
+    isCountdownFinished,
   ];
 }

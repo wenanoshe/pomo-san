@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port 3000 --host",
     "build": "vite build",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host --port 9000"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.2.0",

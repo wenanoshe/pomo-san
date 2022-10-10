@@ -101,42 +101,37 @@ function Pomodoro() {
     setCurrentProfile(JSON.parse(value.dataset.value));
   };
 
+  const countAsFinishedPomo = (countAsSession) => {
+    if (countAsSession) {
+      let copy = [...finishedSessions];
+      let whichProfileIsCounted = copy.find(
+        (i) => currentProfile.name === i.name
+      );
+      // Updating finished sessions
+      whichProfileIsCounted.finishedSessions += 1;
+      setFinishedSessions(copy);
+
+      // Verify if pass to long or normal break
+      if (whichProfileIsCounted.finishedSessions < sessionsBeforeLongBreak)
+        setCurrentSession(session.break);
+      else {
+        setCurrentSession(session.longBreak);
+
+        // This what do is to increment the sessionsBeforeLongBreak
+        setSessionsBeforeLongBreak(
+          sessionsBeforeLongBreak + currentProfile.sessionsBeforeLongBreak
+        );
+      }
+    } else {
+      setCurrentSession(session.break);
+    }
+  };
+
   const skipSession = (countAsSession) => {
-    switch (currentSession) {
-      case session.pomodoro:
-        if (countAsSession) {
-          // Updating finished sessions
-          let copy = [...finishedSessions];
-          let match = copy.find((i) => {
-            return currentProfile.name === i.name;
-          });
-          match.finishedSessions += 1;
-          setFinishedSessions(copy);
-
-          // Verify if pass to long or normal break
-          if (match.finishedSessions < sessionsBeforeLongBreak)
-            setCurrentSession(session.break);
-          else {
-            setCurrentSession(session.longBreak);
-
-            // This what do is to increment the sessionsBeforeLongBreak
-            setSessionsBeforeLongBreak(
-              (last) => last + currentProfile.sessionsBeforeLongBreak
-            );
-          }
-        } else {
-          setCurrentSession(session.break);
-        }
-
-        break;
-
-      case session.break:
-        setCurrentSession(session.pomodoro);
-        break;
-
-      case session.longBreak:
-        setCurrentSession(session.pomodoro);
-        break;
+    if (currentSession === session.pomodoro) {
+      countAsFinishedPomo(countAsSession);
+    } else {
+      setCurrentSession(session.pomodoro);
     }
   };
 
@@ -196,6 +191,7 @@ function Pomodoro() {
       <Timer
         secs={currentProfile.session[currentSession] * 60}
         skipSession={skipSession}
+        countAsFinishedPomo={countAsFinishedPomo}
         currentSession={currentSession}
         finishedSessions={finishedSessions}
         currentProfile={currentProfile}

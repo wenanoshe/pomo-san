@@ -40,6 +40,7 @@ const Timer = ({
     setCount(secs);
 
     // When the timer is removed
+    handleRunning("pause");
     return resetCountdown();
   }, [secs]);
 
@@ -51,7 +52,7 @@ const Timer = ({
 
   useEffect(() => {
     // When we change the profile in a running session
-    setIsTimerRunning(false);
+    handleRunning("pause");
   }, [currentProfile]);
 
   /*
@@ -78,6 +79,11 @@ const Timer = ({
         setIsTimerRunning(true);
         break;
       case "pause":
+        stopCountdown();
+        setIsTimerRunning(false);
+        break;
+      default:
+        console.warn("You did not define what action to use");
         stopCountdown();
         setIsTimerRunning(false);
         break;

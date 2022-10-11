@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFeather, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faFeather, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "./Button";
 
-import { useState } from "react";
-import EditProfileForm from "./EditProfileForm";
+import Modal from "./Modal";
+import { useModal } from "../hooks/useModal";
+import AddProfile from "./AddProfile";
 
 const ProfileItem = ({
   el,
@@ -13,25 +14,14 @@ const ProfileItem = ({
   currentProfile,
   handleClick,
 }) => {
-  const [isEdit, setIsEdit] = useState(false);
+  const [isOpenEPModal, openEPModal, closeEPModal] = useModal();
 
   const handleEditProfile = (e) => {
     e.stopPropagation();
-    setIsEdit(true);
+    openEPModal();
   };
 
-  const onUpdate = (id, newValue) => {
-    editProfile(id, newValue);
-    setIsEdit(false);
-  };
-
-  const onCancel = () => {
-    setIsEdit(false);
-  };
-
-  return isEdit ? (
-    <EditProfileForm el={el} onUpdate={onUpdate} onCancel={onCancel} />
-  ) : (
+  return (
     <li
       data-value={JSON.stringify(el)}
       onClick={handleClick}
@@ -52,6 +42,28 @@ const ProfileItem = ({
           </Button>
         )}
       </div>
+
+      <Modal
+        isOpen={isOpenEPModal}
+        closeModal={closeEPModal}
+        className="ps__modal-profiles"
+      >
+        <div className="ps__header">
+          <h3 className="ps__title">Editing "{el.name}" profile</h3>
+          <Button
+            onClick={() => closeEPModal()}
+            className="btn--md sec ps__modal-close"
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </Button>
+        </div>
+        <AddProfile
+          addNewProfile={editProfile}
+          closeModal={closeEPModal}
+          el={el}
+          btnName="Edit"
+        />
+      </Modal>
     </li>
   );
 };

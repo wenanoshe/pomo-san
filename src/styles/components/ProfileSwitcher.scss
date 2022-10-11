@@ -22,7 +22,7 @@
 
   &__header {
     min-width: 30rem;
-    @include flex(space-between, center);
+    @include flex(space-between, center, row, 1rem);
   }
 
   &__title {

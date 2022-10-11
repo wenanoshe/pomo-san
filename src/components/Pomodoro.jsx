@@ -72,6 +72,10 @@ function Pomodoro() {
 
   useEffect(() => {
     localStorage.setItem("profiles", JSON.stringify(profiles));
+
+    const newCurrentProfile = profiles.find((i) => i.id === currentProfile.id);
+
+    setCurrentProfile(newCurrentProfile);
   }, [profiles]);
 
   useEffect(() => {
@@ -155,17 +159,21 @@ function Pomodoro() {
     setFinishedSessions(FSCopy);
   };
 
-  const editProfile = (id, newValue) => {
+  const editProfile = (newData) => {
     const copy = [...profiles];
 
-    const itemToEdit = copy.find((i) => i.id === id);
-    itemToEdit.name = newValue;
+    let itemToEdit = copy.find((i) => i.id === newData.id);
+    for (const val in itemToEdit) {
+      if (itemToEdit[val] !== newData[val]) {
+        itemToEdit[val] = newData[val];
+      }
+    }
 
     setProfiles(copy);
 
     const FSCopy = [...finishedSessions];
 
-    FSCopy.find((i) => i.id === id).name = newValue;
+    FSCopy.find((i) => i.id === newData.id).name = newData.name;
 
     setFinishedSessions(FSCopy);
   };

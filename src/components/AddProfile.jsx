@@ -4,10 +4,10 @@ import "../styles/components/AddProfile.scss";
 import Button from "./Button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const initForm = {
-  name: "Another Profile",
+  name: "Profile",
   session: {
     pomodoro: 25,
     break: 5,
@@ -21,8 +21,8 @@ const regex = {
   onlyNumbers: new RegExp(/^\d{1,2}$/),
 };
 
-const AddProfile = ({ addNewProfile, closeModal }) => {
-  const [form, setForm] = useState(initForm);
+const AddProfile = ({ addNewProfile, closeModal, el, btnName }) => {
+  const [form, setForm] = useState(el || initForm);
 
   const handleChange = (e) => {
     setForm({
@@ -34,7 +34,10 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
   const handleChangeSession = (e) => {
     setForm({
       ...form,
-      session: { ...form.session, [e.target.name]: parseInt(e.target.value) },
+      session: {
+        ...form.session,
+        [e.target.name]: parseInt(e.target.value) || "",
+      },
     });
   };
 
@@ -60,9 +63,12 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
       return;
     }
 
-    addNewProfile({ ...form, id: crypto.randomUUID() });
+    el
+      ? addNewProfile({ ...form })
+      : addNewProfile({ ...form, id: crypto.randomUUID() });
+
     closeModal();
-    setForm(initForm);
+    setForm(el || initForm);
   };
 
   return (
@@ -142,8 +148,8 @@ const AddProfile = ({ addNewProfile, closeModal }) => {
         onClick={handleSubmit}
         className="profileForm__submit"
       >
-        <span>Add</span>
-        <FontAwesomeIcon icon={faCirclePlus} />
+        <span>{btnName || "Add"}</span>
+        <FontAwesomeIcon icon={btnName ? faEdit : faCirclePlus} />
       </Button>
     </form>
   );

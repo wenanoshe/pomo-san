@@ -2,6 +2,7 @@
 
 .profileForm {
   @include flex(center, stretch, column, 1.5rem);
+  font-size: 1.6rem;
 
   &__place {
     @include flex(space-between, center);

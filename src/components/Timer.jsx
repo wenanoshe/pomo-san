@@ -1,3 +1,4 @@
+// ASSETS
 import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -7,10 +8,13 @@ import {
   faHourglass,
   faMugHot,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "./Button";
+
+import switchSoundURL from "../assets/audio/switch.mp3";
+import bellRingSoundURL from "../assets/audio/bell-ring.mp3";
 
 import { useEffect, useState } from "react";
 import { useCountdown } from "../hooks/useCountdown";
+import Button from "./Button";
 
 import "../styles/components/Timer.scss";
 
@@ -48,6 +52,7 @@ const Timer = ({
     if (count.count === 0) {
       handleSkip();
     }
+    playSound(bellRingSoundURL);
   }, [isCountdownFinished]);
 
   useEffect(() => {
@@ -58,6 +63,11 @@ const Timer = ({
   /*
    * FUNCTIONS
    */
+
+  const playSound = (url) => {
+    const audio = new Audio(url);
+    audio.play();
+  };
 
   const currentFinishedSessions = finishedSessions.find(
     (i) => i.id === currentProfile.id
@@ -114,14 +124,20 @@ const Timer = ({
         {isTimerRunning ? (
           <Button
             className={`btn--${currentSession} timer__btn`}
-            onClick={() => handleRunning("pause")}
+            onClick={() => {
+              handleRunning("pause");
+              playSound(switchSoundURL);
+            }}
           >
             <FAI className="btn__icon" icon={faPause} />
           </Button>
         ) : (
           <Button
             className={`btn--${currentSession} timer__btn`}
-            onClick={() => handleRunning("play")}
+            onClick={() => {
+              handleRunning("play");
+              playSound(switchSoundURL);
+            }}
           >
             <FAI className="btn__icon" icon={faPlay} />
           </Button>

@@ -6,9 +6,6 @@ import ProfileSwitcher from "./ProfileSwitcher";
 import Settings from "./Settings";
 import Modal from "./Modal";
 
-// import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
-// import { faBrain, faMugHot } from "@fortawesome/free-solid-svg-icons";
-
 // HOOKS
 import { useState, useEffect } from "react";
 import { useModal } from "../hooks/useModal";

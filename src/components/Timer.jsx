@@ -25,6 +25,7 @@ const Timer = ({
   finishedSessions,
   currentProfile,
   openSettingsModal,
+  settings,
 }) => {
   const [
     count,
@@ -51,7 +52,26 @@ const Timer = ({
   useEffect(() => {
     if (count.count === 0) {
       handleSkip();
+
+      if (settings.notification) {
+        const msg = {
+          title: `${
+            currentSession === "pomodoro" ? "Pomodoro" : "Break"
+          } finished`,
+          body:
+            currentSession === "pomodoro"
+              ? "You have been finished your work, take a break!"
+              : "Continue focused",
+        };
+
+        const notification = new Notification(msg.title, { body: msg.body });
+
+        setTimeout(() => {
+          notification.close();
+        }, 3000);
+      }
     }
+
     playSound(bellRingSoundURL);
   }, [isCountdownFinished]);
 
@@ -65,6 +85,8 @@ const Timer = ({
    */
 
   const playSound = (url) => {
+    if (!settings.sound) return;
+
     const audio = new Audio(url);
     audio.play();
   };

@@ -10,40 +10,23 @@ import Modal from "./Modal";
 import { useState, useEffect } from "react";
 import { useModal } from "../hooks/useModal";
 
-const defaultProfiles = [
-  {
-    name: "Study",
-    id: 1,
-    session: {
-      pomodoro: 25,
-      break: 5,
-      longBreak: 15,
-    },
-    sessionsBeforeLongBreak: 4,
-  },
-];
+// UTILS
+import {
+  defaultProfiles,
+  defaultFinishedSessions,
+  session,
+  initSettingsForm,
+} from "../utils/initValues";
 
-let initProfiles =
+const initProfiles =
   JSON.parse(localStorage.getItem("profiles")) || defaultProfiles;
 
-const session = {
-  pomodoro: "pomodoro",
-  break: "break",
-  longBreak: "longBreak",
-};
-
-const defaultFinishedSessions = [
-  {
-    name: "Study",
-    id: 1,
-    finishedSessions: 0,
-    timestamp: new Date().getDate(),
-  },
-];
-
-let initFinishedSessions =
+const initFinishedSessions =
   JSON.parse(localStorage.getItem("finishedSessions")) ||
   defaultFinishedSessions;
+
+const initForm =
+  JSON.parse(localStorage.getItem("settings")) || initSettingsForm;
 
 function Pomodoro() {
   // ---- States ----
@@ -57,6 +40,8 @@ function Pomodoro() {
   );
 
   const [isOpenSettings, openSettingsModal, closeSettingsModal] = useModal();
+  const [settings, setSettings] = useState(initForm);
+  const [form, setForm] = useState(settings);
 
   // ---- Effects ----
   useEffect(() => {
@@ -74,6 +59,11 @@ function Pomodoro() {
 
     setCurrentProfile(newCurrentProfile);
   }, [profiles]);
+
+  useEffect(() => {
+    // To update settings
+    localStorage.setItem("settings", JSON.stringify(form));
+  }, [form]);
 
   useEffect(() => {
     // Use a timestamp to compare the creation of the finished session,
@@ -201,9 +191,14 @@ function Pomodoro() {
         finishedSessions={finishedSessions}
         currentProfile={currentProfile}
         openSettingsModal={openSettingsModal}
+        settings={settings}
       />
       <Modal isOpen={isOpenSettings} closeModal={closeSettingsModal}>
-        <Settings closeModal={closeSettingsModal} />
+        <Settings
+          closeModal={closeSettingsModal}
+          form={form}
+          setForm={setForm}
+        />
       </Modal>
     </div>
   );

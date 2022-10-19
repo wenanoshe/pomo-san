@@ -42,6 +42,12 @@ const Timer = ({
    */
 
   useEffect(() => {
+    document.title = `${count.minutes.toString().padStart(2, 0)}:${count.seconds
+      .toString()
+      .padStart(2, 0)} Pomo-san`;
+  }, [count.count]);
+
+  useEffect(() => {
     setCount(secs);
 
     // When the timer is removed
@@ -52,24 +58,7 @@ const Timer = ({
   useEffect(() => {
     if (count.count === 0) {
       handleSkip();
-
-      if (settings.notification) {
-        const msg = {
-          title: `${
-            currentSession === "pomodoro" ? "Pomodoro" : "Break"
-          } finished`,
-          body:
-            currentSession === "pomodoro"
-              ? "You have been finished your work, take a break!"
-              : "Continue focused",
-        };
-
-        const notification = new Notification(msg.title, { body: msg.body });
-
-        setTimeout(() => {
-          notification.close();
-        }, 3000);
-      }
+      displayNotification();
     }
 
     playSound(bellRingSoundURL);
@@ -83,6 +72,26 @@ const Timer = ({
   /*
    * FUNCTIONS
    */
+
+  const displayNotification = () => {
+    if (settings.notification) {
+      const msg = {
+        title: `${
+          currentSession === "pomodoro" ? "Pomodoro" : "Break"
+        } finished`,
+        body:
+          currentSession === "pomodoro"
+            ? "You have been finished your work, take a break!"
+            : "Continue focused",
+      };
+
+      const notification = new Notification(msg.title, { body: msg.body });
+
+      setTimeout(() => {
+        notification.close();
+      }, 5000);
+    }
+  };
 
   const playSound = (url) => {
     if (!settings.sound) return;

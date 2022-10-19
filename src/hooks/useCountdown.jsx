@@ -31,7 +31,7 @@ export function useCountdown(initialCount) {
   };
 
   const startCountDown = () => {
-    intervalId || setIntervalId(setInterval(countdown, 1));
+    intervalId || setIntervalId(setInterval(countdown, 1000));
   };
 
   const stopCountdown = () => {

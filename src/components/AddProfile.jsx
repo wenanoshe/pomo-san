@@ -6,15 +6,7 @@ import Button from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-const initForm = {
-  name: "Profile",
-  session: {
-    pomodoro: 25,
-    break: 5,
-    longBreak: 15,
-  },
-  sessionsBeforeLongBreak: 4,
-};
+import { initAddProfileForm as initForm } from "../utils/initValues";
 
 const regex = {
   onlyChars: new RegExp(/[a-zA-Z]{2,30}\w/),

@@ -1,20 +1,45 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faGear } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
 import Button from "./Button";
+import Switch from "./Switch";
 import "../styles/components/Settings.scss";
 
-const initForm = {
-  notification: false,
-  sound: false,
-};
-
-const Settings = ({ closeModal }) => {
-  const [form, setForm] = useState(initForm);
-
+const Settings = ({ closeModal, form, setForm }) => {
   const handleChecked = ({ target }) => {
-    setForm({ ...form, [target.name]: target.checked });
+    if (target.name === "notification") {
+      if (!("Notification" in window)) {
+        console.log("Your browser don't support Notifications");
+        return;
+      }
+
+      if (Notification.permission === "denied") {
+        alert(
+          'Change your notification permission to "granted" in the notification icon in your address bar'
+        );
+        setForm({ ...form, notification: false });
+        return;
+      }
+
+      if (Notification.permission === "default") {
+        setForm({ ...form, notification: false });
+      }
+
+      if (Notification.permission === "granted") {
+        setForm({ ...form, notification: !form.notification });
+        return;
+      }
+
+      Notification.requestPermission().then((res) => {
+        if (res === "granted") setForm({ ...form, notification: true });
+        else {
+          alert("You'll not recive notifications");
+          setForm({ ...form, notification: false });
+        }
+      });
+    } else {
+      setForm({ ...form, [target.name]: target.checked });
+    }
   };
 
   return (
@@ -33,24 +58,16 @@ const Settings = ({ closeModal }) => {
 
       <form className="settings__form">
         <div className="settings__field">
-          <label htmlFor="notification">Notification</label>
-          <input
-            type="checkbox"
-            id="notification"
+          <span>Notification</span>
+          <Switch
             name="notification"
             checked={form.notification}
             onChange={handleChecked}
           />
         </div>
         <div className="settings__field">
-          <label htmlFor="sound">Sound</label>
-          <input
-            type="checkbox"
-            id="sound"
-            name="sound"
-            checked={form.sound}
-            onChange={handleChecked}
-          />
+          <span>Sound</span>
+          <Switch name="sound" checked={form.sound} onChange={handleChecked} />
         </div>
       </form>
     </div>

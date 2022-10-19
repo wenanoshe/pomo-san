@@ -63,6 +63,7 @@ function Pomodoro() {
   useEffect(() => {
     // To update settings
     localStorage.setItem("settings", JSON.stringify(form));
+    setSettings(JSON.parse(localStorage.getItem("settings")));
   }, [form]);
 
   useEffect(() => {

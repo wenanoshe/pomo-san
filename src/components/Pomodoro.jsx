@@ -18,29 +18,30 @@ import {
   initSettingsForm,
 } from "../utils/initValues";
 
-const initProfiles =
-  JSON.parse(localStorage.getItem("profiles")) || defaultProfiles;
-
-const initFinishedSessions =
-  JSON.parse(localStorage.getItem("finishedSessions")) ||
-  defaultFinishedSessions;
-
-const initForm =
-  JSON.parse(localStorage.getItem("settings")) || initSettingsForm;
+const init = {
+  profiles: JSON.parse(localStorage.getItem("profiles")) || defaultProfiles,
+  finishedSessions:
+    JSON.parse(localStorage.getItem("finishedSessions")) ||
+    defaultFinishedSessions,
+  form: JSON.parse(localStorage.getItem("settings")) || initSettingsForm,
+  currentProfile:
+    JSON.parse(localStorage.getItem("currentProfile")) || defaultProfiles[0],
+};
 
 function Pomodoro() {
   // ---- States ----
-  const [profiles, setProfiles] = useState(initProfiles);
-  const [currentProfile, setCurrentProfile] = useState(profiles[0]);
+  const [profiles, setProfiles] = useState(init.profiles);
+  const [currentProfile, setCurrentProfile] = useState(init.currentProfile);
   const [currentSession, setCurrentSession] = useState(session.pomodoro);
-  const [finishedSessions, setFinishedSessions] =
-    useState(initFinishedSessions);
+  const [finishedSessions, setFinishedSessions] = useState(
+    init.finishedSessions
+  );
   const [sessionsBeforeLongBreak, setSessionsBeforeLongBreak] = useState(
     currentProfile.sessionsBeforeLongBreak
   );
 
   const [isOpenSettings, openSettingsModal, closeSettingsModal] = useModal();
-  const [settings, setSettings] = useState(initForm);
+  const [settings, setSettings] = useState(init.form);
   const [form, setForm] = useState(settings);
 
   // ---- Effects ----
@@ -50,6 +51,7 @@ function Pomodoro() {
 
   useEffect(() => {
     setSessionsBeforeLongBreak(currentProfile.sessionsBeforeLongBreak);
+    localStorage.setItem("currentProfile", JSON.stringify(currentProfile));
   }, [currentProfile]);
 
   useEffect(() => {

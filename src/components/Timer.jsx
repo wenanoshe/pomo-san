@@ -61,9 +61,8 @@ const Timer = ({
     if (count.count === 0) {
       handleSkip();
       displayNotification();
+      playSound(bellRingSoundURL);
     }
-
-    playSound(bellRingSoundURL);
   }, [isCountdownFinished]);
 
   useEffect(() => {

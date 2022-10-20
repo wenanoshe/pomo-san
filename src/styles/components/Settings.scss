@@ -38,3 +38,13 @@
     }
   }
 }
+
+.attribution {
+  padding-top: 2rem;
+  border-top: 1px solid $black-alpha-100;
+  font-size: 1.4rem;
+  color: $black-alpha;
+  @include flex(center, center, column);
+  line-height: 1.5;
+  font-family: $Roboto;
+}

@@ -38,6 +38,7 @@ const Settings = ({ closeModal, form, setForm }) => {
         }
       });
     } else {
+      console.log("are");
       setForm({ ...form, [target.name]: target.checked });
     }
   };
@@ -70,6 +71,22 @@ const Settings = ({ closeModal, form, setForm }) => {
           <Switch name="sound" checked={form.sound} onChange={handleChecked} />
         </div>
       </form>
+
+      <div className="attribution">
+        <span>
+          {" "}
+          Based on the design of{" "}
+          <a
+            href="https://www.figma.com/community/file/1112830528857083939"
+            target="_blank"
+          >
+            AlexandrLo
+          </a>
+        </span>
+        <span>
+          Developed by <a href="github.com/wenanoshe">Wenanoshe</a>
+        </span>
+      </div>
     </div>
   );
 };

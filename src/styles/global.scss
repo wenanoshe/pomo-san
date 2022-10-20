@@ -21,6 +21,10 @@ body {
       border-color: $red-900;
     }
   }
+
+  & a {
+    color: $red-900;
+  }
 }
 
 .break {
@@ -32,6 +36,10 @@ body {
       border-color: $green-900;
     }
   }
+
+  & a {
+    color: $green-900;
+  }
 }
 
 .longBreak {
@@ -42,6 +50,10 @@ body {
     &:focus {
       border-color: $blue-900;
     }
+  }
+
+  & a {
+    color: $blue-900;
   }
 }
 
@@ -60,6 +72,14 @@ a {
   transition: border-color $speed;
   &:focus {
     outline: none;
+  }
+}
+
+a {
+  font-weight: 500;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
 }
 

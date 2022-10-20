@@ -18,6 +18,8 @@ import Button from "./Button";
 
 import "../styles/components/Timer.scss";
 
+import Push from "push.js";
+
 const Timer = ({
   secs,
   skipSession,
@@ -59,9 +61,8 @@ const Timer = ({
     if (count.count === 0) {
       handleSkip();
       displayNotification();
+      playSound(bellRingSoundURL);
     }
-
-    playSound(bellRingSoundURL);
   }, [isCountdownFinished]);
 
   useEffect(() => {
@@ -85,16 +86,12 @@ const Timer = ({
             : "Continue focused",
       };
 
-      const notification = new Notification(msg.title, { body: msg.body });
-
-      setTimeout(() => {
-        notification.close();
-      }, 5000);
+      Push.create(msg.title, { body: msg.body, timeout: 5000 });
     }
   };
 
   const playSound = (url) => {
-    if (!settings.sound) return;
+    if (settings.sound === false) return;
 
     const audio = new Audio(url);
     audio.play();

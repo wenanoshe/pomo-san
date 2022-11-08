@@ -86,7 +86,7 @@ const Timer = ({
             : "Continue focused",
       };
 
-      Push.create(msg.title, { body: msg.body, timeout: 5000 });
+      Push.create(msg.title, { body: msg.body });
     }
   };
 

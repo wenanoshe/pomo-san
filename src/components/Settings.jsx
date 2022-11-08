@@ -9,7 +9,7 @@ const Settings = ({ closeModal, form, setForm }) => {
   const handleChecked = ({ target }) => {
     if (target.name === "notification") {
       if (!("Notification" in window)) {
-        console.log("Your browser don't support Notifications");
+        console.warn("Your browser don't support Notifications");
         return;
       }
 
@@ -38,7 +38,6 @@ const Settings = ({ closeModal, form, setForm }) => {
         }
       });
     } else {
-      console.log("are");
       setForm({ ...form, [target.name]: target.checked });
     }
   };

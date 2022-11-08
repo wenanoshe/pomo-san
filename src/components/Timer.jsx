@@ -11,7 +11,6 @@ import {
 
 import switchSoundURL from "../assets/audio/switch.mp3";
 import bellRingSoundURL from "../assets/audio/bell-ring.mp3";
-import appIcon from "/public/images/pomo-san(192x192).png";
 
 import { useEffect, useState } from "react";
 import { useCountdown } from "../hooks/useCountdown";
@@ -19,7 +18,7 @@ import Button from "./Button";
 
 import "../styles/components/Timer.scss";
 
-import addNotification from "react-push-notification";
+import Push from "push.js";
 
 const Timer = ({
   secs,
@@ -45,11 +44,9 @@ const Timer = ({
    */
 
   useEffect(() => {
-    document.title = `${
-      currentSession === "pomodoro" ? "Focus" : "break" ? "Break" : "Long Break"
-    } ${count.minutes.toString().padStart(2, 0)}:${count.seconds
+    document.title = `${count.minutes.toString().padStart(2, 0)}:${count.seconds
       .toString()
-      .padStart(2, 0)} | Pomo-san`;
+      .padStart(2, 0)} Pomo-san`;
   }, [count.count]);
 
   useEffect(() => {
@@ -83,16 +80,13 @@ const Timer = ({
         title: `${
           currentSession === "pomodoro" ? "Pomodoro" : "Break"
         } finished`,
-        subtitle:
+        body:
           currentSession === "pomodoro"
             ? "You have been finished your work, take a break!"
             : "Continue focused",
-        native: true,
-        duration: 60000,
-        icon: appIcon,
       };
 
-      addNotification(msg);
+      Push.create(msg.title, { body: msg.body });
     }
   };
 

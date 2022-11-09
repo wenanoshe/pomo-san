@@ -44,8 +44,14 @@ export function useCountdown(initialCount) {
     setCount(initialCount);
   };
 
+  const SECS_PER_MINUTE = 60;
+
   return [
-    { minutes: Math.floor(count / 60), seconds: count % 60, count },
+    {
+      minutes: Math.floor(count / SECS_PER_MINUTE),
+      seconds: count % SECS_PER_MINUTE,
+      count,
+    },
     setCount,
     startCountDown,
     stopCountdown,

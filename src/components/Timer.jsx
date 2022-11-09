@@ -46,7 +46,9 @@ const Timer = ({
   useEffect(() => {
     document.title = `${count.minutes.toString().padStart(2, 0)}:${count.seconds
       .toString()
-      .padStart(2, 0)} Pomo-san`;
+      .padStart(2, 0)} ${
+      currentSession === "pomodoro" ? "Focus" : "break" ? "Break" : "Long Break"
+    } | Pomo-san`;
   }, [count.count]);
 
   useEffect(() => {

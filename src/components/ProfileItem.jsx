@@ -61,7 +61,7 @@ const ProfileItem = ({
           addNewProfile={editProfile}
           closeModal={closeEPModal}
           el={el}
-          btnName="Edit"
+          btnName="Save"
         />
       </Modal>
     </li>

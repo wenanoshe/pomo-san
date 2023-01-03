@@ -33,8 +33,6 @@ const ProfileSwitcher = ({
     handleChangeProfile(e.currentTarget);
   };
 
-  // const handleEditProfile = () => {};
-
   const handleDelProfile = (e) => {
     e.stopPropagation();
     const li = e.currentTarget.parentElement.parentElement.dataset.value;
@@ -54,7 +52,7 @@ const ProfileSwitcher = ({
           {profiles.map((el) => (
             <ProfileItem
               key={el.id}
-              el={el}
+              profile={el}
               editProfile={editProfile}
               handleDelProfile={handleDelProfile}
               currentProfile={currentProfile}

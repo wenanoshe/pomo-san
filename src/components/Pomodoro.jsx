@@ -15,20 +15,20 @@ import {
   defaultProfiles,
   defaultFinishedSessions,
   session,
-  initSettingsForm,
-} from "../utils/initValues";
+  defaultSettingsForm,
+} from "../utils/defaultValues";
 
 const init = {
   profiles: JSON.parse(localStorage.getItem("profiles")) || defaultProfiles,
   finishedSessions:
     JSON.parse(localStorage.getItem("finishedSessions")) ||
     defaultFinishedSessions,
-  form: JSON.parse(localStorage.getItem("settings")) || initSettingsForm,
+  form: JSON.parse(localStorage.getItem("settings")) || defaultSettingsForm,
   currentProfile:
     JSON.parse(localStorage.getItem("currentProfile")) || defaultProfiles[0],
 };
 
-function Pomodoro() {
+const Pomodoro = () => {
   // ---- States ----
   const [profiles, setProfiles] = useState(init.profiles);
   const [currentProfile, setCurrentProfile] = useState(init.currentProfile);
@@ -205,18 +205,6 @@ function Pomodoro() {
       </Modal>
     </div>
   );
-}
-
-/*
-      <div className={`chip chip--${currentSession}`}>
-        {currentSession === "pomodoro" ? (
-          <FAI className="chip__icon" icon={faBrain} />
-        ) : (
-          <FAI className="chip__icon" icon={faMugHot} />
-        )}
-        <span className="chip__stm">{currentSession}</span>
-      </div>
-
-*/
+};
 
 export default Pomodoro;

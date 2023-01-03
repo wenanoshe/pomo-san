@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import Pomodoro from "./components/Pomodoro";
 import "./styles/global.scss";
 import "normalize.css";

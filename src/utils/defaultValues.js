@@ -26,7 +26,7 @@ export const session = {
   longBreak: "longBreak",
 };
 
-export const initAddProfileForm = {
+export const defaultAddProfileForm = {
   name: "Profile",
   session: {
     pomodoro: 25,
@@ -36,7 +36,7 @@ export const initAddProfileForm = {
   sessionsBeforeLongBreak: 4,
 };
 
-export const initSettingsForm = {
+export const defaultSettingsForm = {
   notification: false,
   sound: false,
 };

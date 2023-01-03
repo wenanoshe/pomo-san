@@ -8,7 +8,7 @@ import { useModal } from "../hooks/useModal";
 import AddProfile from "./AddProfile";
 
 const ProfileItem = ({
-  el,
+  profile,
   handleDelProfile,
   editProfile,
   currentProfile,
@@ -23,20 +23,20 @@ const ProfileItem = ({
 
   return (
     <li
-      data-value={JSON.stringify(el)}
+      data-value={JSON.stringify(profile)}
       onClick={handleClick}
       className={`ps__li ${
-        currentProfile.id === el.id ? "ps__li--active" : ""
+        currentProfile.id === profile.id ? "ps__li--active" : ""
       }`}
     >
-      <span className="ps__profile-name">{el.name}</span>
+      <span className="ps__profile-name">{profile.name}</span>
 
       <div className="ps__actions">
         <Button onClick={handleEditProfile} className="btn--sm sec-2 ">
           <FontAwesomeIcon icon={faFeather} />
         </Button>
 
-        {currentProfile.id !== el.id && (
+        {currentProfile.id !== profile.id && (
           <Button onClick={handleDelProfile} className="btn--sm sec-2">
             <FontAwesomeIcon icon={faTrash} />
           </Button>
@@ -49,7 +49,7 @@ const ProfileItem = ({
         className="ps__modal-profiles"
       >
         <div className="ps__header">
-          <h3 className="ps__title">Editing "{el.name}" profile</h3>
+          <h3 className="ps__title">Editing "{profile.name}" profile</h3>
           <Button
             onClick={() => closeEPModal()}
             className="btn--md sec ps__modal-close"
@@ -60,7 +60,7 @@ const ProfileItem = ({
         <AddProfile
           addNewProfile={editProfile}
           closeModal={closeEPModal}
-          el={el}
+          profile={profile}
           btnName="Save"
         />
       </Modal>

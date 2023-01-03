@@ -1,20 +1,13 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { defaultAddProfileForm as initForm } from "../utils/defaultValues";
 import { useState } from "react";
-
+import { REGEX } from "../utils/constants";
 import "../styles/components/AddProfile.scss";
 import Button from "./Button";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faEdit } from "@fortawesome/free-solid-svg-icons";
-
-import { initAddProfileForm as initForm } from "../utils/initValues";
-
-const regex = {
-  onlyChars: new RegExp(/[a-zA-Z]{2,30}\w/),
-  onlyNumbers: new RegExp(/^\d{1,2}$/),
-};
-
-const AddProfile = ({ addNewProfile, closeModal, el, btnName }) => {
-  const [form, setForm] = useState(el || initForm);
+const AddProfile = ({ addNewProfile, closeModal, profile, btnName }) => {
+  const [form, setForm] = useState(profile || initForm);
 
   const handleChange = (e) => {
     setForm({
@@ -36,7 +29,7 @@ const AddProfile = ({ addNewProfile, closeModal, el, btnName }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Verification
-    if (!regex.onlyChars.test(form.name)) {
+    if (!REGEX.onlyChars.test(form.name)) {
       alert(
         "!! Invalid Profile Name \n Only letters are allowed with a maximum of 30 chars"
       );
@@ -44,23 +37,23 @@ const AddProfile = ({ addNewProfile, closeModal, el, btnName }) => {
     }
 
     for (const key in form.session) {
-      if (!regex.onlyNumbers.test(form.session[key])) {
+      if (!REGEX.onlyNumbers.test(form.session[key])) {
         alert("Only numbers are allowed min 1, max 2 chars");
         return;
       }
     }
 
-    if (!regex.onlyNumbers.test(form.sessionsBeforeLongBreak)) {
+    if (!REGEX.onlyNumbers.test(form.sessionsBeforeLongBreak)) {
       alert("Only numbers are allowed min 1, max 2 chars");
       return;
     }
 
-    el
+    profile
       ? addNewProfile({ ...form })
       : addNewProfile({ ...form, id: crypto.randomUUID() });
 
     closeModal();
-    setForm(el || initForm);
+    setForm(profile || initForm);
   };
 
   return (

@@ -83,7 +83,7 @@ const Settings = ({ closeModal, form, setForm }) => {
           </a>
         </span>
         <span>
-          Developed by <a href="github.com/wenanoshe">Wenanoshe</a>
+          Developed by <a href="https://github.com/wenanoshe">Wenanoshe</a>
         </span>
       </div>
     </div>

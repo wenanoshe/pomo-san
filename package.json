@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5000 --host",
+    "dev": "vite --port 5000",
     "build": "vite build",
     "preview": "vite preview --port 5050"
   },
@@ -18,9 +18,13 @@
     "sass": "^1.55.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.14.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
+    "eslint": "^9.14.0",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.12.0",
     "vite": "^3.1.0",
     "vite-plugin-pwa": "^0.13.2"
   }

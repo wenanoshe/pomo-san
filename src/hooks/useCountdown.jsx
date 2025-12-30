@@ -1,48 +1,65 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import TimerWorker from "../workers/timer.worker.js?worker";
 
 export function useCountdown(initialCount) {
   if (typeof initialCount !== "number") {
     return console.error("You must set an initial number in seconds");
   }
 
-  const [intervalId, setIntervalId] = useState(null);
   const [count, setCount] = useState(initialCount);
   const [isCountdownFinished, setIsCountdownFinished] = useState(false);
+  const workerRef = useRef(null);
 
-  // handling functions
-
+  // Initialize Worker
   useEffect(() => {
-    if (count === 0) {
-      setIsCountdownFinished(true);
-    } else {
+    workerRef.current = new TimerWorker();
+
+    workerRef.current.onmessage = (e) => {
+      const { type, remaining } = e.data;
+      if (type === "tick") {
+        setCount(remaining);
+      } else if (type === "finish") {
+        setIsCountdownFinished(true);
+        setCount(0);
+      }
+    };
+
+    return () => {
+      workerRef.current.terminate();
+    };
+  }, []);
+
+  // Sync count with initialCount when it changes
+  useEffect(() => {
+    if (workerRef.current) {
+      workerRef.current.postMessage({ command: "stop" });
+    }
+    setCount(initialCount);
+    setIsCountdownFinished(false);
+  }, [initialCount]);
+
+  // Handling functions
+
+  const startCountDown = useCallback(() => {
+    if (workerRef.current && count > 0) {
+      workerRef.current.postMessage({ command: "start", value: count });
       setIsCountdownFinished(false);
     }
   }, [count]);
 
-  const countdown = () => {
-    // Stop countdown when reaches 0
-    setCount((last) => {
-      if (last <= 0) {
-        clearInterval(intervalId);
+  const stopCountdown = useCallback(() => {
+    if (workerRef.current) {
+      workerRef.current.postMessage({ command: "stop" });
+    }
+  }, []);
 
-        return last;
-      } else return last - 1;
-    });
-  };
-
-  const startCountDown = () => {
-    intervalId || setIntervalId(setInterval(countdown, 1000));
-  };
-
-  const stopCountdown = () => {
-    clearInterval(intervalId);
-    setIntervalId(null);
-  };
-
-  const resetCountdown = () => {
-    stopCountdown();
+  const resetCountdown = useCallback(() => {
+    if (workerRef.current) {
+      workerRef.current.postMessage({ command: "stop" });
+    }
     setCount(initialCount);
-  };
+    setIsCountdownFinished(false);
+  }, [initialCount]);
 
   const SECS_PER_MINUTE = 60;
 

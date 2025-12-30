@@ -78,12 +78,20 @@ const Settings = ({ closeModal, form, setForm }) => {
           <a
             href="https://www.figma.com/community/file/1112830528857083939"
             target="_blank"
+            rel="noopener noreferrer"
           >
             AlexandrLo
           </a>
         </span>
         <span>
-          Developed by <a href="https://github.com/wenanoshe">Wenanoshe</a>
+          Developed by{" "}
+          <a
+            href="https://github.com/wenanoshe"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Wenanoshe
+          </a>
         </span>
       </div>
     </div>

@@ -49,7 +49,7 @@ const ProfileItem = ({
         className="ps__modal-profiles"
       >
         <div className="ps__header">
-          <h3 className="ps__title">Editing "{profile.name}" profile</h3>
+          <h3 className="ps__title">Editing &quot;{profile.name}&quot; profile</h3>
           <Button
             onClick={() => closeEPModal()}
             className="btn--md sec ps__modal-close"

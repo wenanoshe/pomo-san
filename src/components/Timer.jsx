@@ -21,7 +21,7 @@ import "../styles/components/Timer.scss";
 import Push from "push.js";
 
 const Timer = ({
-  secs,
+  seconds,
   skipSession,
   currentSession,
   finishedSessions,
@@ -36,28 +36,32 @@ const Timer = ({
     stopCountdown,
     resetCountdown,
     isCountdownFinished,
-  ] = useCountdown(secs);
+  ] = useCountdown(seconds);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   /*
    * EFFECTS
    */
+  const sessionText = {
+    pomodoro: "Focus",
+    break: "Break",
+    longBreak: "Long Break",
+  }[currentSession];
 
+  // Change the title of the page
   useEffect(() => {
     document.title = `${count.minutes.toString().padStart(2, 0)}:${count.seconds
       .toString()
-      .padStart(2, 0)} ${
-      currentSession === "pomodoro" ? "Focus" : "break" ? "Break" : "Long Break"
-    } | Pomo-san`;
+      .padStart(2, 0)} ${sessionText} | Pomo-san`;
   }, [count.count]);
 
   useEffect(() => {
-    setCount(secs);
+    setCount(seconds);
 
     // When the timer is removed
     handleRunning("pause");
     return resetCountdown();
-  }, [secs]);
+  }, [seconds]);
 
   useEffect(() => {
     if (count.count === 0) {
@@ -106,7 +110,7 @@ const Timer = ({
   const handleSkip = () => {
     setIsTimerRunning(false);
     // Passing a parameter that allow if count the pomodoro sesion as one
-    let minimumToCountAsSession = secs * 0.2;
+    let minimumToCountAsSession = seconds * 0.2;
 
     if (count.count < minimumToCountAsSession) skipSession(true);
     else skipSession(false);
@@ -115,7 +119,20 @@ const Timer = ({
   const handleRunning = (action) => {
     switch (action) {
       case "play":
-        startCountdown();
+        // eslint-disable-next-line no-case-declarations
+        const msg = settings.notification
+          ? {
+              title: `${
+                currentSession === "pomodoro" ? "Pomodoro" : "Break"
+              } finished`,
+              body:
+                currentSession === "pomodoro"
+                  ? "You have been finished your work, take a break!"
+                  : "Continue focused",
+            }
+          : null;
+
+        startCountdown(msg);
         setIsTimerRunning(true);
         break;
       case "pause":

@@ -187,7 +187,7 @@ const Pomodoro = () => {
         deleteProfile={deleteProfile}
       />
       <Timer
-        secs={currentProfile.session[currentSession] * 60}
+        seconds={currentProfile.session[currentSession] * 60}
         skipSession={skipSession}
         countAsFinishedPomo={countAsFinishedPomo}
         currentSession={currentSession}

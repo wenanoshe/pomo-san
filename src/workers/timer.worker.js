@@ -60,6 +60,16 @@ self.onmessage = (e) => {
       endTime = null;
       break;
 
+    case "extend":
+      if (endTime && value > 0) {
+        endTime += value * 1000;
+        // Emit an immediate tick so the UI reflects the new remaining time
+        const now = Date.now();
+        const left = Math.ceil((endTime - now) / 1000);
+        self.postMessage({ type: "tick", remaining: left });
+      }
+      break;
+
     default:
       break;
   }

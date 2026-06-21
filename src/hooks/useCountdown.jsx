@@ -61,6 +61,12 @@ export function useCountdown(initialCount) {
     setIsCountdownFinished(false);
   }, [initialCount]);
 
+  const extendCountdown = useCallback((seconds) => {
+    if (workerRef.current && typeof seconds === "number" && seconds > 0) {
+      workerRef.current.postMessage({ command: "extend", value: seconds });
+    }
+  }, []);
+
   const SECS_PER_MINUTE = 60;
 
   return [
@@ -74,5 +80,6 @@ export function useCountdown(initialCount) {
     stopCountdown,
     resetCountdown,
     isCountdownFinished,
+    extendCountdown,
   ];
 }

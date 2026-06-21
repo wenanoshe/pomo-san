@@ -6,6 +6,15 @@ import Switch from "./Switch";
 import "../styles/components/Settings.scss";
 
 const Settings = ({ closeModal, form, setForm }) => {
+  const handleAddTimeChange = ({ target }) => {
+    const value = parseInt(target.value, 10);
+    if (Number.isNaN(value) || value < 1) {
+      setForm({ ...form, addTimeAmount: 1 });
+    } else {
+      setForm({ ...form, addTimeAmount: value });
+    }
+  };
+
   const handleChecked = ({ target }) => {
     if (target.name === "notification") {
       if (!("Notification" in window)) {
@@ -68,6 +77,26 @@ const Settings = ({ closeModal, form, setForm }) => {
         <div className="settings__field">
           <span>Sound</span>
           <Switch name="sound" checked={form.sound} onChange={handleChecked} />
+        </div>
+        <div className="settings__field">
+          <span>Add time (minutes)</span>
+          <input
+            type="number"
+            name="addTimeAmount"
+            min="1"
+            step="1"
+            value={form.addTimeAmount}
+            onChange={handleAddTimeChange}
+            className="settings__numberInput"
+          />
+        </div>
+        <div className="settings__field">
+          <span>Show time on button</span>
+          <Switch
+            name="showAddTimeAmount"
+            checked={form.showAddTimeAmount}
+            onChange={handleChecked}
+          />
         </div>
       </form>
 

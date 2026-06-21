@@ -39,4 +39,6 @@ export const defaultAddProfileForm = {
 export const defaultSettingsForm = {
   notification: false,
   sound: false,
+  addTimeAmount: 1,
+  showAddTimeAmount: true,
 };

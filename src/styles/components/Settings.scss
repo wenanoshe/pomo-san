@@ -1,4 +1,4 @@
-@use "../vars" as *;
+@use '../vars' as *;
 
 .settings {
   display: flex;
@@ -35,6 +35,23 @@
 
     &:last-child {
       padding-bottom: 0;
+    }
+  }
+
+  &__numberInput {
+    font-family: inherit;
+    font-size: 1.6rem;
+    width: 6rem;
+    padding: 0.6rem 1rem;
+    border-radius: $radius-2;
+    border: 1px solid $black-alpha-100;
+    background-color: transparent;
+    color: inherit;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: $black-alpha;
     }
   }
 }

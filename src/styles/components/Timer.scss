@@ -1,4 +1,4 @@
-@use "../vars" as *;
+@use '../vars' as *;
 
 .timer {
   @include flex(center, center, column, 3rem);
@@ -44,6 +44,29 @@
     opacity: 0.5;
     display: flex;
     gap: 0.5rem;
+  }
+
+  &__addTime {
+    position: absolute;
+    bottom: 50%;
+    right: -5.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 1rem;
+    line-height: 1;
+
+    .btn__icon {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__addTimeLabel {
+    display: none;
   }
 }
 

@@ -8,6 +8,7 @@ import {
   faHourglass,
   faMugHot,
 } from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 
 import switchSoundURL from "../assets/audio/switch.mp3";
 import bellRingSoundURL from "../assets/audio/bell-ring.mp3";
@@ -36,8 +37,10 @@ const Timer = ({
     stopCountdown,
     resetCountdown,
     isCountdownFinished,
+    extendCountdown,
   ] = useCountdown(seconds);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   /*
    * EFFECTS
@@ -60,6 +63,7 @@ const Timer = ({
 
     // When the timer is removed
     handleRunning("pause");
+    setIsPaused(false); // session changed → fully stopped
     return resetCountdown();
   }, [seconds]);
 
@@ -74,6 +78,7 @@ const Timer = ({
   useEffect(() => {
     // When we change the profile in a running session
     handleRunning("pause");
+    setIsPaused(false);
   }, [currentProfile]);
 
   /*
@@ -109,6 +114,7 @@ const Timer = ({
 
   const handleSkip = () => {
     setIsTimerRunning(false);
+    setIsPaused(false);
     // Passing a parameter that allow if count the pomodoro sesion as one
     let minimumToCountAsSession = seconds * 0.2;
 
@@ -134,15 +140,18 @@ const Timer = ({
 
         startCountdown(msg);
         setIsTimerRunning(true);
+        setIsPaused(false);
         break;
       case "pause":
         stopCountdown();
         setIsTimerRunning(false);
+        setIsPaused(true);
         break;
       default:
         console.warn("You did not define what action to use");
         stopCountdown();
         setIsTimerRunning(false);
+        setIsPaused(true);
         break;
     }
   };
@@ -157,6 +166,22 @@ const Timer = ({
           <span className="timer__finishedSessions">
             {currentFinishedSessions}
           </span>
+        )}
+
+        {(isTimerRunning || isPaused) && (
+          <Button
+            onClick={() => extendCountdown(settings.addTimeAmount * 60)}
+            className={`btn--${currentSession} timer__addTime`}
+            outline
+            aria-label="Add time to countdown"
+          >
+            <FAI icon={faSquarePlus} className="btn__icon" />
+            {settings.showAddTimeAmount && (
+              <span className="timer__addTimeLabel">
+                {settings.addTimeAmount}
+              </span>
+            )}
+          </Button>
         )}
       </div>
 
@@ -201,8 +226,8 @@ const Timer = ({
           {currentSession === "pomodoro"
             ? "focus"
             : currentSession === "longBreak"
-            ? "long break"
-            : currentSession}
+              ? "long break"
+              : currentSession}
 
           <FAI icon={currentSession === "pomodoro" ? faHourglass : faMugHot} />
         </span>

@@ -1,14 +1,13 @@
 // ASSETS
-import { FontAwesomeIcon as FAI } from "@fortawesome/react-fontawesome";
 import {
-  faPlay,
-  faPause,
-  faForward,
-  faGear,
-  faHourglass,
-  faMugHot,
-} from "@fortawesome/free-solid-svg-icons";
-import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
+  Play,
+  Pause,
+  FastForward,
+  Cog,
+  Hourglass,
+  Coffee,
+  SquarePlus,
+} from "lucide-react";
 
 import switchSoundURL from "../assets/audio/switch.mp3";
 import bellRingSoundURL from "../assets/audio/bell-ring.mp3";
@@ -175,7 +174,7 @@ const Timer = ({
             outline
             aria-label="Add time to countdown"
           >
-            <FAI icon={faSquarePlus} className="btn__icon" />
+            <SquarePlus className="btn__icon" />
             {settings.showAddTimeAmount && (
               <span className="timer__addTimeLabel">
                 {settings.addTimeAmount}
@@ -190,7 +189,7 @@ const Timer = ({
           onClick={openSettingsModal}
           className={`btn--md sec btn--${currentSession}`}
         >
-          <FAI icon={faGear} className="btn__icon" />
+          <Cog className="btn__icon" />
         </Button>
 
         {isTimerRunning ? (
@@ -201,7 +200,7 @@ const Timer = ({
               playSound(switchSoundURL);
             }}
           >
-            <FAI className="btn__icon" icon={faPause} />
+            <Pause className="btn__icon" />
           </Button>
         ) : (
           <Button
@@ -211,7 +210,7 @@ const Timer = ({
               playSound(switchSoundURL);
             }}
           >
-            <FAI className="btn__icon" icon={faPlay} />
+            <Play className="btn__icon" />
           </Button>
         )}
 
@@ -219,7 +218,7 @@ const Timer = ({
           onClick={handleSkip}
           className={`btn--md sec btn--${currentSession}`}
         >
-          <FAI icon={faForward} className="btn__icon" />
+          <FastForward className="btn__icon" />
         </Button>
 
         <span className="timer__currentSession">
@@ -229,7 +228,7 @@ const Timer = ({
               ? "long break"
               : currentSession}
 
-          <FAI icon={currentSession === "pomodoro" ? faHourglass : faMugHot} />
+          {currentSession === "pomodoro" ? <Hourglass /> : <Coffee />}
         </span>
       </div>
     </div>

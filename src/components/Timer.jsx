@@ -3,7 +3,7 @@ import {
   Play,
   Pause,
   FastForward,
-  Cog,
+  Settings,
   Hourglass,
   Coffee,
   SquarePlus,
@@ -189,7 +189,7 @@ const Timer = ({
           onClick={openSettingsModal}
           className={`btn--md sec btn--${currentSession}`}
         >
-          <Cog className="btn__icon" />
+          <Settings className="btn__icon" />
         </Button>
 
         {isTimerRunning ? (

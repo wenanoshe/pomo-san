@@ -1,4 +1,4 @@
-import { Cog, X } from "lucide-react";
+import { Settings as SettingsIcon, X } from "lucide-react";
 
 import Button from "./Button";
 import Switch from "./Switch";
@@ -54,7 +54,7 @@ const Settings = ({ closeModal, form, setForm }) => {
     <div className="settings">
       <div className="settings__header">
         <h3 className="settings__title">
-          <span>Settings</span> <Cog />
+          <span>Settings</span> <SettingsIcon />
         </h3>
         <Button
           onClick={closeModal}

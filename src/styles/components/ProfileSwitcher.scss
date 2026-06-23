@@ -4,8 +4,7 @@
   &__openBtn {
     width: max-content;
     font-family: $RobotoFlex;
-    font-size: 2.4rem;
-    border: 2px solid transparent;
+    font-size: 1.8rem;
     padding: 0.8rem 1.6rem;
     border-radius: 5rem;
     @include flex(center, center, row, 1rem);

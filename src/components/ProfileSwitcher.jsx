@@ -78,7 +78,7 @@ const ProfileSwitcher = ({
       </Modal>
 
       <Button className="btn--md sec ps__openBtn" onClick={openModal}>
-        <Clock />
+        <Clock size={20} />
         <span className="ps__stm">{currentProfile.name}</span>
       </Button>
     </div>

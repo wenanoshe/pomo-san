@@ -7,6 +7,7 @@ import {
   Hourglass,
   Coffee,
   SquarePlus,
+  Plus,
 } from "lucide-react";
 
 import switchSoundURL from "../assets/audio/switch.mp3";
@@ -174,7 +175,7 @@ const Timer = ({
             outline
             aria-label="Add time to countdown"
           >
-            <SquarePlus className="btn__icon" />
+            <Plus className="btn__icon" />
             {settings.showAddTimeAmount && (
               <span className="timer__addTimeLabel">
                 {settings.addTimeAmount}
@@ -200,7 +201,7 @@ const Timer = ({
               playSound(switchSoundURL);
             }}
           >
-            <Pause className="btn__icon" />
+            <Pause className="btn__icon" size={32} />
           </Button>
         ) : (
           <Button
@@ -210,7 +211,7 @@ const Timer = ({
               playSound(switchSoundURL);
             }}
           >
-            <Play className="btn__icon" />
+            <Play className="btn__icon" size={32} />
           </Button>
         )}
 
@@ -228,7 +229,11 @@ const Timer = ({
               ? "long break"
               : currentSession}
 
-          {currentSession === "pomodoro" ? <Hourglass /> : <Coffee />}
+          {currentSession === "pomodoro" ? (
+            <Hourglass size={18} />
+          ) : (
+            <Coffee size={18} />
+          )}
         </span>
       </div>
     </div>

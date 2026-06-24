@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { CirclePlus, Pencil } from "lucide-react";
 import { defaultAddProfileForm as initForm } from "../utils/defaultValues";
 import { useState } from "react";
 import { REGEX } from "../utils/constants";
@@ -134,7 +133,7 @@ const AddProfile = ({ addNewProfile, closeModal, profile, btnName }) => {
         className="profileForm__submit"
       >
         <span>{btnName || "Add"}</span>
-        <FontAwesomeIcon icon={btnName ? faEdit : faCirclePlus} />
+        {btnName ? <Pencil /> : <CirclePlus />}
       </Button>
     </form>
   );

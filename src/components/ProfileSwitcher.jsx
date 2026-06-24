@@ -1,9 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClock,
-  faXmark,
-  faCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { Clock, X, CirclePlus } from "lucide-react";
 
 import AddProfile from "./AddProfile";
 import Modal from "./Modal";
@@ -45,7 +40,7 @@ const ProfileSwitcher = ({
         <div className="ps__header">
           <h3 className="ps__title">Profiles</h3>
           <Button onClick={closeModal} className="btn--md sec ps__modal-close">
-            <FontAwesomeIcon icon={faXmark} />
+            <X />
           </Button>
         </div>
         <ul className="ps__profiles">
@@ -62,7 +57,7 @@ const ProfileSwitcher = ({
         </ul>
         <Button onClick={openAddProfileModal} className="ps__addProfileBtn">
           <span>Add new Profile</span>
-          <FontAwesomeIcon icon={faCirclePlus} />
+          <CirclePlus />
         </Button>
       </Modal>
 
@@ -73,7 +68,7 @@ const ProfileSwitcher = ({
             onClick={closeAddProfileModal}
             className="btn--md sec ps__modal-close"
           >
-            <FontAwesomeIcon icon={faXmark} />
+            <X />
           </Button>
         </div>
         <AddProfile
@@ -83,7 +78,7 @@ const ProfileSwitcher = ({
       </Modal>
 
       <Button className="btn--md sec ps__openBtn" onClick={openModal}>
-        <FontAwesomeIcon icon={faClock} />
+        <Clock size={20} />
         <span className="ps__stm">{currentProfile.name}</span>
       </Button>
     </div>

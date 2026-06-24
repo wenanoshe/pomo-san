@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFeather, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Feather, Trash2, X } from "lucide-react";
 
 import Button from "./Button";
 
@@ -33,12 +32,12 @@ const ProfileItem = ({
 
       <div className="ps__actions">
         <Button onClick={handleEditProfile} className="btn--sm sec-2 ">
-          <FontAwesomeIcon icon={faFeather} />
+          <Feather />
         </Button>
 
         {currentProfile.id !== profile.id && (
           <Button onClick={handleDelProfile} className="btn--sm sec-2">
-            <FontAwesomeIcon icon={faTrash} />
+            <Trash2 />
           </Button>
         )}
       </div>
@@ -49,12 +48,14 @@ const ProfileItem = ({
         className="ps__modal-profiles"
       >
         <div className="ps__header">
-          <h3 className="ps__title">Editing &quot;{profile.name}&quot; profile</h3>
+          <h3 className="ps__title">
+            Editing &quot;{profile.name}&quot; profile
+          </h3>
           <Button
             onClick={() => closeEPModal()}
             className="btn--md sec ps__modal-close"
           >
-            <FontAwesomeIcon icon={faXmark} />
+            <X />
           </Button>
         </div>
         <AddProfile

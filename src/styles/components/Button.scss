@@ -1,8 +1,8 @@
-@use '../vars' as *;
+@use "../vars" as *;
 
 .btn {
   margin: 0;
-  border: none;
+  border: 1px solid var(--btn-border-color);
 
   position: relative;
   padding: 2em /* 32px */ 3em /* 48px */;
@@ -73,7 +73,7 @@
 }
 
 .pomodoro .btn {
-  // border: 2px solid transparent;
+  --btn-border-color: #{$red-900};
   background-color: $red-alpha-700;
   color: $red-900;
 
@@ -87,6 +87,7 @@
 }
 
 .break .btn {
+  --btn-border-color: #{$green-900};
   background-color: $green-alpha-600;
   color: $green-900;
 
@@ -100,6 +101,7 @@
 }
 
 .longBreak .btn {
+  --btn-border-color: #{$blue-900};
   background-color: $blue-alpha-600;
   color: $blue-900;
 

@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faGear } from "@fortawesome/free-solid-svg-icons";
+import { Settings as SettingsIcon, X } from "lucide-react";
 
 import Button from "./Button";
 import Switch from "./Switch";
@@ -55,13 +54,13 @@ const Settings = ({ closeModal, form, setForm }) => {
     <div className="settings">
       <div className="settings__header">
         <h3 className="settings__title">
-          <span>Settings</span> <FontAwesomeIcon icon={faGear} />
+          <span>Settings</span> <SettingsIcon />
         </h3>
         <Button
           onClick={closeModal}
           className="btn--md sec settings__closeModal"
         >
-          <FontAwesomeIcon icon={faXmark} />
+          <X />
         </Button>
       </div>
 

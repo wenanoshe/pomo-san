@@ -41,4 +41,5 @@ export const defaultSettingsForm = {
   sound: false,
   addTimeAmount: 1,
   showAddTimeAmount: true,
+  showIdleTimer: true,
 };

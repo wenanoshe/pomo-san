@@ -6,7 +6,6 @@ import {
   Settings,
   Hourglass,
   Coffee,
-  SquarePlus,
   Plus,
 } from "lucide-react";
 
@@ -41,10 +40,22 @@ const Timer = ({
   ] = useCountdown(seconds);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isIdle, setIsIdle] = useState(false);
+  const [idleSeconds, setIdleSeconds] = useState(0);
 
   /*
    * EFFECTS
    */
+
+  const formatIdle = (s) => {
+    if (s < 3600) {
+      const m = Math.floor(s / 60);
+      const sec = s % 60;
+      return `${m}:${String(sec).padStart(2, "0")}`;
+    }
+    return `${Math.floor(s / 60)}m`;
+  };
+
   const sessionText = {
     pomodoro: "Focus",
     break: "Break",
@@ -72,13 +83,22 @@ const Timer = ({
       handleSkip();
       displayNotification();
       playSound(bellRingSoundURL);
+      if (settings.showIdleTimer) setIsIdle(true);
     }
   }, [isCountdownFinished]);
+
+  useEffect(() => {
+    if (!isIdle) return;
+    const id = setInterval(() => setIdleSeconds((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, [isIdle]);
 
   useEffect(() => {
     // When we change the profile in a running session
     handleRunning("pause");
     setIsPaused(false);
+    setIsIdle(false);
+    setIdleSeconds(0);
   }, [currentProfile]);
 
   /*
@@ -113,6 +133,8 @@ const Timer = ({
   ).finishedSessions;
 
   const handleSkip = () => {
+    setIsIdle(false);
+    setIdleSeconds(0);
     setIsTimerRunning(false);
     setIsPaused(false);
     // Passing a parameter that allow if count the pomodoro sesion as one
@@ -125,6 +147,8 @@ const Timer = ({
   const handleRunning = (action) => {
     switch (action) {
       case "play":
+        setIsIdle(false);
+        setIdleSeconds(0);
         // eslint-disable-next-line no-case-declarations
         const msg = settings.notification
           ? {
@@ -233,6 +257,13 @@ const Timer = ({
             <Hourglass size={18} />
           ) : (
             <Coffee size={18} />
+          )}
+
+          {isIdle && settings.showIdleTimer && (
+            <span className="timer__idleBadge" aria-live="polite">
+              <Hourglass size={14} />
+              Idle {formatIdle(idleSeconds)}
+            </span>
           )}
         </span>
       </div>

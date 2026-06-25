@@ -31,6 +31,7 @@
   }
 
   &__modal-close {
+    @include flex(center, center);
     padding: 1rem;
     width: 4rem;
     height: 4rem;
@@ -82,6 +83,7 @@
     font-weight: 700;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
   }
 }

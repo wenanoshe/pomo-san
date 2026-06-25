@@ -39,7 +39,10 @@ const ProfileSwitcher = ({
       <Modal isOpen={isOpenModal} className="ps__modal-profiles">
         <div className="ps__header">
           <h3 className="ps__title">Profiles</h3>
-          <Button onClick={closeModal} className="btn--md sec ps__modal-close">
+          <Button
+            onClick={closeModal}
+            className="btn--sm btn--icon ps__modal-close"
+          >
             <X />
           </Button>
         </div>
@@ -66,7 +69,7 @@ const ProfileSwitcher = ({
           <h3 className="ps__title">Add New Profile</h3>
           <Button
             onClick={closeAddProfileModal}
-            className="btn--md sec ps__modal-close"
+            className="btn--sm btn--icon ps__modal-close"
           >
             <X />
           </Button>

@@ -1,4 +1,4 @@
-@use '../vars' as *;
+@use "../vars" as *;
 
 .settings {
   display: flex;
@@ -23,6 +23,8 @@
     padding: 1rem;
     width: 4rem;
     height: 4rem;
+    background-color: transparent !important;
+    border: none;
   }
 
   &__form {

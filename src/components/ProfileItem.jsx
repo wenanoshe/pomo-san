@@ -31,12 +31,12 @@ const ProfileItem = ({
       <span className="ps__profile-name">{profile.name}</span>
 
       <div className="ps__actions">
-        <Button onClick={handleEditProfile} className="btn--sm sec-2 ">
+        <Button onClick={handleEditProfile} className="btn--sm btn--icon">
           <Feather />
         </Button>
 
         {currentProfile.id !== profile.id && (
-          <Button onClick={handleDelProfile} className="btn--sm sec-2">
+          <Button onClick={handleDelProfile} className="btn--sm btn--icon">
             <Trash2 />
           </Button>
         )}
@@ -53,7 +53,7 @@ const ProfileItem = ({
           </h3>
           <Button
             onClick={() => closeEPModal()}
-            className="btn--md sec ps__modal-close"
+            className="btn--sm btn--icon ps__modal-close"
           >
             <X />
           </Button>

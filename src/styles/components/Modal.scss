@@ -30,14 +30,17 @@
 
 .pomodoro .modal__container {
   background-color: $red-50;
+  border: 1px $red-900 solid;
 }
 
 .break .modal__container {
   background-color: $green-50;
+  border: 1px $green-900 solid;
 }
 
 .longBreak .modal__container {
   background-color: $blue-50;
+  border: 1px $blue-900 solid;
 }
 
 @media screen and (max-width: 550px) {

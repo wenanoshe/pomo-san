@@ -97,6 +97,14 @@ const Settings = ({ closeModal, form, setForm }) => {
             onChange={handleChecked}
           />
         </div>
+        <div className="settings__field">
+          <span>Show idle timer</span>
+          <Switch
+            name="showIdleTimer"
+            checked={form.showIdleTimer}
+            onChange={handleChecked}
+          />
+        </div>
       </form>
 
       <div className="attribution">

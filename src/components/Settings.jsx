@@ -16,8 +16,15 @@ const Settings = ({ closeModal, form, setForm }) => {
 
   const handleChecked = ({ target }) => {
     if (target.name === "notification") {
-      if (!("Notification" in window)) {
-        console.warn("Your browser don't support Notifications");
+      if (
+        typeof window === "undefined" ||
+        typeof window.Notification === "undefined"
+      ) {
+        alert(
+          "Notifications aren't available here. On iPhone/iPad, open the site in Safari, " +
+            'tap Share → "Add to Home Screen", then launch Pomo-san from there to enable notifications.'
+        );
+        setForm({ ...form, notification: false });
         return;
       }
 
@@ -29,19 +36,17 @@ const Settings = ({ closeModal, form, setForm }) => {
         return;
       }
 
-      if (Notification.permission === "default") {
-        setForm({ ...form, notification: false });
-      }
-
       if (Notification.permission === "granted") {
         setForm({ ...form, notification: !form.notification });
         return;
       }
 
+      // permission === "default"
       Notification.requestPermission().then((res) => {
-        if (res === "granted") setForm({ ...form, notification: true });
-        else {
-          alert("You'll not recive notifications");
+        if (res === "granted") {
+          setForm({ ...form, notification: true });
+        } else {
+          alert("You'll not receive notifications");
           setForm({ ...form, notification: false });
         }
       });

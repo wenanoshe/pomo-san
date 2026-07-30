@@ -38,8 +38,8 @@ export const defaultAddProfileForm = {
 
 export const defaultSettingsForm = {
   notification: false,
-  sound: false,
   addTimeAmount: 1,
   showAddTimeAmount: true,
   showIdleTimer: true,
+  wakeLock: false, // NEW — opt-in screen wake lock while timer runs
 };

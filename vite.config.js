@@ -8,6 +8,12 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      strategies: "injectManifest",
+      srcDir: "src/sw",
+      filename: "sw.js",
+      injectManifest: {
+        injectionPoint: undefined,
+      },
       manifest: {
         name: "Pomo-san",
         short_name: "Pomo-san",

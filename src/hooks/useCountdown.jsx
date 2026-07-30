@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import TimerWorker from "../workers/timer.worker.js?worker";
 
 export function useCountdown(initialCount) {
   if (typeof initialCount !== "number") {
@@ -8,62 +7,79 @@ export function useCountdown(initialCount) {
 
   const [count, setCount] = useState(initialCount);
   const [isCountdownFinished, setIsCountdownFinished] = useState(false);
-  const workerRef = useRef(null);
+  const resyncedRef = useRef(false);
 
-  // Initialize Worker
+  const getController = () => navigator.serviceWorker?.controller ?? null;
+  const post = (msg) => {
+    const c = getController();
+    if (c) c.postMessage(msg);
+  };
+
   useEffect(() => {
-    workerRef.current = new TimerWorker();
+    const sw = navigator.serviceWorker;
+    if (!("serviceWorker" in navigator) || !sw) {
+      console.warn("Service Worker unavailable; countdown disabled.");
+      return;
+    }
 
-    workerRef.current.onmessage = (e) => {
-      const { type, remaining } = e.data;
+    const onMessage = (e) => {
+      const { type, remaining } = e.data ?? {};
       if (type === "tick") {
         setCount(remaining);
       } else if (type === "finish") {
         setIsCountdownFinished(true);
         setCount(0);
+      } else if (type === "remaining") {
+        if (typeof remaining === "number" && remaining > 0) {
+          setCount(remaining);
+        }
       }
     };
+    sw.addEventListener("message", onMessage);
+
+    const sendQuery = () => {
+      if (resyncedRef.current) return;
+      resyncedRef.current = true;
+      post({ command: "query" });
+    };
+
+    if (getController()) {
+      sendQuery();
+    } else {
+      sw.addEventListener("controllerchange", sendQuery);
+    }
 
     return () => {
-      workerRef.current.terminate();
+      sw.removeEventListener("message", onMessage);
+      sw.removeEventListener("controllerchange", sendQuery);
     };
   }, []);
 
-  // Sync count with initialCount when it changes
   useEffect(() => {
-    if (workerRef.current) {
-      workerRef.current.postMessage({ command: "stop" });
-    }
     setCount(initialCount);
     setIsCountdownFinished(false);
   }, [initialCount]);
 
-  // Handling functions
-
-  const startCountDown = useCallback(() => {
-    if (workerRef.current && count > 0) {
-      workerRef.current.postMessage({ command: "start", value: count });
+  const startCountDown = useCallback((value, notification) => {
+    if (value > 0) {
+      post({ command: "start", value, notification });
       setIsCountdownFinished(false);
-    }
-  }, [count]);
-
-  const stopCountdown = useCallback(() => {
-    if (workerRef.current) {
-      workerRef.current.postMessage({ command: "stop" });
     }
   }, []);
 
+  const stopCountdown = useCallback(() => {
+    post({ command: "stop" });
+  }, []);
+
   const resetCountdown = useCallback(() => {
-    if (workerRef.current) {
-      workerRef.current.postMessage({ command: "stop" });
-    }
+    post({ command: "stop" });
     setCount(initialCount);
     setIsCountdownFinished(false);
   }, [initialCount]);
 
   const extendCountdown = useCallback((seconds) => {
-    if (workerRef.current && typeof seconds === "number" && seconds > 0) {
-      workerRef.current.postMessage({ command: "extend", value: seconds });
+    if (typeof seconds === "number" && seconds > 0) {
+      post({ command: "extend", value: seconds });
     }
   }, []);
 

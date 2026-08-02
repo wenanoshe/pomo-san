@@ -22,7 +22,8 @@ const Settings = ({ closeModal, form, setForm }) => {
       ) {
         alert(
           "Notifications aren't available here. On iPhone/iPad, open the site in Safari, " +
-            'tap Share → "Add to Home Screen", then launch Pomo-san from there to enable notifications.'
+            'tap Share → "Add to Home Screen", then launch Pomo-san from there to enable notifications. ' +
+            "On iOS, notifications only arrive if the app is launched from the home-screen icon."
         );
         setForm({ ...form, notification: false });
         return;
@@ -79,8 +80,12 @@ const Settings = ({ closeModal, form, setForm }) => {
           />
         </div>
         <div className="settings__field">
-          <span>Sound</span>
-          <Switch name="sound" checked={form.sound} onChange={handleChecked} />
+          <span>Keep screen awake</span>
+          <Switch
+            name="wakeLock"
+            checked={form.wakeLock}
+            onChange={handleChecked}
+          />
         </div>
         <div className="settings__field">
           <span>Add time (minutes)</span>

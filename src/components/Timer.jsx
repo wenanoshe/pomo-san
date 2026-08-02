@@ -9,16 +9,12 @@ import {
   Plus,
 } from "lucide-react";
 
-import switchSoundURL from "../assets/audio/switch.mp3";
-import bellRingSoundURL from "../assets/audio/bell-ring.mp3";
-
 import { useEffect, useState } from "react";
 import { useCountdown } from "../hooks/useCountdown";
+import { useWakeLock } from "../hooks/useWakeLock";
 import Button from "./Button";
 
 import "../styles/components/Timer.scss";
-
-import Push from "push.js";
 
 const Timer = ({
   seconds,
@@ -42,6 +38,8 @@ const Timer = ({
   const [isPaused, setIsPaused] = useState(false);
   const [isIdle, setIsIdle] = useState(false);
   const [idleSeconds, setIdleSeconds] = useState(0);
+
+  useWakeLock(settings.wakeLock && isTimerRunning);
 
   /*
    * EFFECTS
@@ -81,8 +79,6 @@ const Timer = ({
   useEffect(() => {
     if (count.count === 0) {
       handleSkip();
-      displayNotification();
-      playSound(bellRingSoundURL);
       if (settings.showIdleTimer) setIsIdle(true);
     }
   }, [isCountdownFinished]);
@@ -104,29 +100,6 @@ const Timer = ({
   /*
    * FUNCTIONS
    */
-
-  const displayNotification = () => {
-    if (settings.notification) {
-      const msg = {
-        title: `${
-          currentSession === "pomodoro" ? "Pomodoro" : "Break"
-        } finished`,
-        body:
-          currentSession === "pomodoro"
-            ? "You have been finished your work, take a break!"
-            : "Continue focused",
-      };
-
-      Push.create(msg.title, { body: msg.body });
-    }
-  };
-
-  const playSound = (url) => {
-    if (settings.sound === false) return;
-
-    const audio = new Audio(url);
-    audio.play();
-  };
 
   const currentFinishedSessions = finishedSessions.find(
     (i) => i.id === currentProfile.id
@@ -162,7 +135,7 @@ const Timer = ({
             }
           : null;
 
-        startCountdown(msg);
+        startCountdown(count.count, msg);
         setIsTimerRunning(true);
         setIsPaused(false);
         break;
@@ -222,7 +195,6 @@ const Timer = ({
             className={`btn--${currentSession} timer__btn`}
             onClick={() => {
               handleRunning("pause");
-              playSound(switchSoundURL);
             }}
           >
             <Pause className="btn__icon" size={32} />
@@ -232,7 +204,6 @@ const Timer = ({
             className={`btn--${currentSession} timer__btn`}
             onClick={() => {
               handleRunning("play");
-              playSound(switchSoundURL);
             }}
           >
             <Play className="btn__icon" size={32} />
